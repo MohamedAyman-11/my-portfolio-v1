@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">MA</title>
+  <defs>
+    <linearGradient id="tile" x1="8" y1="4" x2="57" y2="61" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#240046"/>
+      <stop offset="1" stop-color="#03045e"/>
+    </linearGradient>
+    <linearGradient id="monogram" x1="11" y1="14" x2="54" y2="51" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#d9c8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#050508"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#tile)"/>
+  <path d="M8 48V16h3l8.8 11.8L29 16h3v32h-5V25.5l-7.2 9.6-7-9.5V48H8Z" fill="url(#monogram)"/>
+  <path d="m34 48 10.5-32h4.3l10.5 32h-5.2l-2.4-7.4H41.5L39.1 48H34Zm9-12h7.2l-3.6-11-3.6 11Z" fill="url(#monogram)"/>
+</svg>

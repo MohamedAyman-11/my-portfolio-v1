@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "journey": "Journey",
+    "contact": "Contact"
+  },
+  "skipLink": "Skip to content",
+  "primaryNavigation": "Primary navigation",
+  "homeLabel": "Go to homepage",
+  "followMe": "FIND ME ON",
+  "photoAlt": "Portrait of Mohamed Ayman",
+  "heroOrbitLabel": "FULL STACK DEVELOPER · FULL STACK DEVELOPER · FULL STACK DEVELOPER · FULL STACK DEVELOPER ·",
+  "metadata": {
+    "title": "Mohamed Ayman — Full-Stack Developer",
+    "description": "Portfolio of Mohamed Ayman, Full-Stack Developer."
+  },
+  "hire": "Hire me",
+  "menu": "Open navigation menu",
+  "closeMenu": "Close navigation menu",
+  "theme": "Switch color theme",
+  "language": "Switch language",
+  "heroEyebrow": "WELCOME TO MY CREATIVE SPACE",
+  "heroLead": "I am",
+  "heroAccent": "Mohamed",
+  "heroRole": "Full-Stack Developer",
+  "heroBody": "I build thoughtful, reliable web experiences — from polished interfaces to the systems behind them. I care about the details that make software feel effortless.",
+  "work": "Explore my work",
+  "download": "Download CV",
+  "scroll": "Scroll to explore",
+  "available": "Available for opportunities",
+  "aboutEyebrow": "GET TO KNOW ME",
+  "aboutTitleLead": "About",
+  "aboutTitleAccent": "Me",
+  "storyTitle": "My Story",
+  "aboutBody": "I enjoy turning complex problems into clear, useful products. My work brings together careful engineering, considered design, and a steady focus on the people using what I build.",
+  "aboutBody2": "From the first sketch to the final deployment, I value collaboration, maintainable code, and learning something new along the way.",
+  "stats": [
+    {
+      "value": "+2",
+      "label": "Years Experience"
+    },
+    {
+      "value": "+10",
+      "label": "Projects Built"
+    },
+    {
+      "value": "+14",
+      "label": "Technologies"
+    },
+    {
+      "value": "CS",
+      "label": "Education Department"
+    }
+  ],
+  "skillCategories": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools & Others"
+  },
+  "servicesEyebrow": "WHAT I DO",
+  "servicesTitleLead": "My",
+  "servicesTitleAccent": "Services",
+  "servicesIntro": "End-to-end solutions that connect reliable application systems with clear, thoughtful interfaces.",
+  "servicesCta": "Have a project in mind?",
+  "servicesCtaButton": "Let’s work together",
+  "services": [
+    {
+      "title": "Frontend development",
+      "body": "Responsive, accessible interfaces built around real user needs and thoughtful interactions.",
+      "tags": [
+        "React & Next.js",
+        "TypeScript",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "title": "Full-stack applications",
+      "body": "Reliable web applications that connect polished interfaces to maintainable backend systems.",
+      "tags": [
+        "Next.js",
+        "Node.js",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "title": "API development",
+      "body": "Clear API structures and integrations that help your product communicate reliably.",
+      "tags": [
+        "REST APIs",
+        "Node.js",
+        "Integration"
+      ]
+    },
+    {
+      "title": "Database design",
+      "body": "Thoughtful relational data models built for consistency, maintainability, and growth.",
+      "tags": [
+        "PostgreSQL",
+        "Data modeling",
+        "SQL"
+      ]
+    },
+    {
+      "title": "Product collaboration",
+      "body": "A practical partner from early technical decisions through iteration and launch.",
+      "tags": [
+        "Planning",
+        "Iteration",
+        "Teamwork"
+      ]
+    },
+    {
+      "title": "Quality & accessibility",
+      "body": "Careful attention to performance, responsive behavior, and accessible interactions.",
+      "tags": [
+        "Responsive UI",
+        "Accessibility",
+        "Code quality"
+      ]
+    }
+  ],
+  "projectsEyebrow": "SELECTED WORK",
+  "projectsTitleLead": "Featured",
+  "projectsTitleAccent": "Projects",
+  "projectsIntro": "A selection of projects and experiments. Project details and links can be updated in the central portfolio data.",
+  "projects": {
+    "project-01": { "name": "Your project name", "type": "Web application", "description": "Add a short description of the problem, your approach, and what makes this work meaningful." },
+    "project-02": { "name": "Your project name", "type": "Product experience", "description": "Replace this placeholder with a concise overview of a project you would like to feature." },
+    "project-03": { "name": "Your project name", "type": "Open-source / experiment", "description": "Share what you explored, the tools you used, and a link to the working result." }
+  },
+  "projectAction": "Demo",
+  "repos": "Repos",
+  "repositoriesLabel": "Project repositories",
+  "preview": "Preview unavailable",
+  "previewBody": "A live preview has not been configured for this project yet. Add a demo URL to the portfolio data to make it available.",
+  "close": "Close dialog",
+  "openProject": "Open project",
+  "journeyEyebrow": "MY PATH",
+  "journeyTitleLead": "My",
+  "journeyTitleAccent": "Journey",
+  "journeyIntro": "A thoughtful path from understanding a problem to improving the finished product.",
+  "journeyEnding": "And the journey continues…",
+  "journeySteps": [
+    {
+      "title": "Understand",
+      "body": "Start with the people, the problem, and what a useful outcome looks like."
+    },
+    {
+      "title": "Shape",
+      "body": "Explore options, make the important trade-offs clear, and plan a sensible path."
+    },
+    {
+      "title": "Build",
+      "body": "Deliver in small, reviewable steps with quality and accessibility built in."
+    },
+    {
+      "title": "Improve",
+      "body": "Learn from real use, refine the experience, and keep the foundations healthy."
+    }
+  ],
+  "contactEyebrow": "GET IN TOUCH",
+  "contactTitleLead": "Let’s",
+  "contactTitleAccent": "Connect",
+  "contactBody": "Have a project in mind? Let’s discuss how we can work together to bring your ideas to life.",
+  "contactCardTitle": "Let’s Build Together",
+  "contactAvailability": "Open to collaboration",
+  "contactCardBody": "A good project starts with a conversation. Share what you’re building and let’s talk through the next steps.",
+  "connectTitle": "Connect with me",
+  "emailDirectLabel": "EMAIL ME DIRECTLY",
+  "sendMessageTitle": "Send a Message",
+  "contactEmail": "Your Email",
+  "contactName": "Your Name",
+  "namePlaceholder": "John Doe",
+  "emailPlaceholder": "john@example.com",
+  "subject": "Subject",
+  "subjectPlaceholder": "Project inquiry",
+  "message": "Message",
+  "messagePlaceholder": "Tell me about your project…",
+  "send": "Send Message",
+  "sending": "Opening your email app…",
+  "formHint": "Your email app will open with your message ready to send.",
+  "formMissing": "Add a contact email to enable the form.",
+  "formError": "Please complete all fields with a valid email address.",
+  "emailMissing": "Contact email not set yet",
+  "footerRole": "Full-Stack Developer",
+  "top": "Back to top",
+  "copyright": "Made with care."
+}
