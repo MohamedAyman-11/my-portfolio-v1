@@ -2871,38 +2871,51 @@ html[data-theme="light"] .skill-group-2 .skill-group-dot {
   z-index: 100;
   top: 0;
   left: 0;
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -9px;
-  border: 1px solid color-mix(in srgb, var(--cursor-accent, var(--purple)) 78%, white);
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 2px solid #fff;
   border-radius: 50%;
-  box-shadow: 0 0 8px color-mix(in srgb, var(--cursor-accent, var(--purple)) 28%, transparent);
+  background: color-mix(in srgb, var(--cursor-accent, var(--purple)) 12%, transparent);
+  box-shadow:
+    0 0 0 2px rgba(18, 20, 30, .78),
+    0 0 14px color-mix(in srgb, var(--cursor-accent, var(--purple)) 58%, transparent);
   pointer-events: none;
-  transition: transform .075s linear, width .18s, height .18s, border-color .18s, box-shadow .18s;
+  transition: transform .075s linear, width .18s ease, height .18s ease, margin .18s ease, background-color .18s ease, box-shadow .18s ease;
 }
 
 .custom-cursor>span {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--cursor-accent, var(--cyan));
-  box-shadow: 0 0 5px color-mix(in srgb, var(--cursor-accent, var(--cyan)) 70%, transparent);
+  background: #fff;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--cursor-accent, var(--cyan)) 88%, #171923),
+    0 0 9px color-mix(in srgb, var(--cursor-accent, var(--cyan)) 75%, transparent);
   transform: translate(-50%, -50%);
+  transition: width .18s ease, height .18s ease, box-shadow .18s ease;
 }
 
 .custom-cursor.is-over {
-  width: 25px;
-  height: 25px;
-  margin: -12.5px 0 0 -12.5px;
-  border-color: var(--cursor-accent, var(--purple));
-  box-shadow: 0 0 10px color-mix(in srgb, var(--cursor-accent, var(--purple)) 34%, transparent);
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  background: color-mix(in srgb, var(--cursor-accent, var(--purple)) 22%, transparent);
+  box-shadow:
+    0 0 0 2px rgba(18, 20, 30, .82),
+    0 0 20px color-mix(in srgb, var(--cursor-accent, var(--purple)) 72%, transparent);
+}
+
+.custom-cursor.is-over>span {
+  width: 8px;
+  height: 8px;
 }
 
 .custom-cursor.is-service-hover {
-  background: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
+  background: color-mix(in srgb, var(--cursor-accent) 24%, transparent);
 }
 
 .custom-cursor {
