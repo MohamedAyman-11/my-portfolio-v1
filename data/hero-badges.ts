@@ -5,3 +5,5 @@ export const heroBadges = [
   { name: "PostgreSQL", icon: "postgresql", position: "four" },
   { name: "TypeScript", icon: "typescript", position: "five" },
 ] as const;
+
+export const ServiceBadges = ["react", "express", "db", "performance"] as const;

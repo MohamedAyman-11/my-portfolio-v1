@@ -26,7 +26,7 @@
   "heroLead": "I am",
   "heroAccent": "Mohamed",
   "heroRole": "Full-Stack Developer",
-  "heroBody": "I build thoughtful, reliable web experiences — from polished interfaces to the systems behind them. I care about the details that make software feel effortless.",
+  "heroBody": "A Computer Science student and Full-Stack Developer passionate about engineering impactful digital experiences. I build modern, scalable web applications using React, Next.js, Node.js, and Express.js — combining thoughtful design with robust engineering to turn ideas into powerful digital products.",
   "work": "Explore my work",
   "download": "Download CV",
   "scroll": "Scroll to explore",
@@ -35,19 +35,20 @@
   "aboutTitleLead": "About",
   "aboutTitleAccent": "Me",
   "storyTitle": "My Story",
-  "aboutBody": "I enjoy turning complex problems into clear, useful products. My work brings together careful engineering, considered design, and a steady focus on the people using what I build.",
-  "aboutBody2": "From the first sketch to the final deployment, I value collaboration, maintainable code, and learning something new along the way.",
+  "aboutBody": "I’m Mohamed Ayman, a Full-Stack Developer and Computer Science student passionate about engineering robust, scalable, and well-structured web applications.",
+  "aboutBody2": "My work spans the full development lifecycle, from crafting responsive, high-quality interfaces with React and Next.js to building secure, efficient backend systems with Node.js and Express.js. I focus on delivering seamless user experiences backed by reliable architecture and production-ready code.",
+  "aboutBody3": "Beyond implementation, I’m interested in software architecture, problem-solving, and the decisions that shape great products. I strive to turn complex ideas into practical, well-engineered solutions that balance functionality, performance, and long-term scalability.",
   "stats": [
     {
       "value": "+2",
       "label": "Years Experience"
     },
     {
-      "value": "+10",
+      "value": "+5",
       "label": "Projects Built"
     },
     {
-      "value": "+14",
+      "value": "+10",
       "label": "Technologies"
     },
     {
@@ -63,7 +64,7 @@
   "servicesEyebrow": "WHAT I DO",
   "servicesTitleLead": "My",
   "servicesTitleAccent": "Services",
-  "servicesIntro": "End-to-end solutions that connect reliable application systems with clear, thoughtful interfaces.",
+  "servicesIntro": "Building seamless digital experiences through robust engineering and thoughtful design.",
   "servicesCta": "Have a project in mind?",
   "servicesCtaButton": "Let’s work together",
   "services": [
@@ -73,69 +74,65 @@
       "tags": [
         "React & Next.js",
         "TypeScript",
-        "Tailwind CSS"
+        "Tailwind CSS",
+        "Responsive UI",
+        "Interactive UI"
       ]
     },
     {
-      "title": "Full-stack applications",
-      "body": "Reliable web applications that connect polished interfaces to maintainable backend systems.",
+      "title": "Backend development",
+      "body": "Reliable backend services and APIs built to support maintainable, scalable applications.",
       "tags": [
-        "Next.js",
-        "Node.js",
-        "PostgreSQL"
-      ]
-    },
-    {
-      "title": "API development",
-      "body": "Clear API structures and integrations that help your product communicate reliably.",
-      "tags": [
+        "Express.js",
         "REST APIs",
         "Node.js",
-        "Integration"
+        "JWT & Security"
       ]
-    },
+    }
+    ,
     {
       "title": "Database design",
       "body": "Thoughtful relational data models built for consistency, maintainability, and growth.",
       "tags": [
         "PostgreSQL",
         "Data modeling",
-        "SQL"
+        "SQL",
+        "MongoDB",
+        "Prisma",
+        "Schema design",
+        "Query optimization"
       ]
     },
     {
-      "title": "Product collaboration",
-      "body": "A practical partner from early technical decisions through iteration and launch.",
+      "title": "Performance optimization",
+      "body": "Fast, responsive experiences shaped by careful optimization and attention to detail.",
       "tags": [
-        "Planning",
-        "Iteration",
-        "Teamwork"
-      ]
-    },
-    {
-      "title": "Quality & accessibility",
-      "body": "Careful attention to performance, responsive behavior, and accessible interactions.",
-      "tags": [
-        "Responsive UI",
+        "Core Web Vitals",
+        "Optimization",
         "Accessibility",
-        "Code quality"
+        "Caching",
+        "SEO"
       ]
     }
   ],
   "projectsEyebrow": "SELECTED WORK",
   "projectsTitleLead": "Featured",
   "projectsTitleAccent": "Projects",
-  "projectsIntro": "A selection of projects and experiments. Project details and links can be updated in the central portfolio data.",
+  "projectsIntro": "A showcase of projects built with purpose, combining thoughtful design, solid engineering, and real-world problem-solving.",
   "projects": {
-    "project-01": { "name": "Your project name", "type": "Web application", "description": "Add a short description of the problem, your approach, and what makes this work meaningful." },
-    "project-02": { "name": "Your project name", "type": "Product experience", "description": "Replace this placeholder with a concise overview of a project you would like to feature." },
+    "project-01": { "name": "Booking Platform", "type": "Full-stack booking platform", "description": "A full-stack accommodation booking platform with property management, reservations, and role-based experiences for guests, hosts, and administrators. It includes JWT authentication, Google OAuth, reviews, and Stripe payments, with MongoDB, Cloudinary, and TanStack Query supporting the experience." },
+    "project-02": { "name": "Craveo", "type": "Full-stack food ordering platform", "description": "A multi-role food ordering platform for customers, administrators, and delivery teams. It brings together product customization, cart management, order tracking, and Stripe payments, powered by a Node.js and Express.js API with PostgreSQL and Prisma." },
     "project-03": { "name": "Your project name", "type": "Open-source / experiment", "description": "Share what you explored, the tools you used, and a link to the working result." }
   },
   "projectAction": "Demo",
   "repos": "Repos",
   "repositoriesLabel": "Project repositories",
   "preview": "Preview unavailable",
-  "previewBody": "A live preview has not been configured for this project yet. Add a demo URL to the portfolio data to make it available.",
+  "previewBody": "Add a website URL or video URL to this project’s demo settings to show it here.",
+  "demoMode": "DEMO MODE",
+  "previewSize": "Preview size",
+  "desktopView": "Desktop preview",
+  "mobileView": "Mobile preview",
   "close": "Close dialog",
   "openProject": "Open project",
   "journeyEyebrow": "MY PATH",

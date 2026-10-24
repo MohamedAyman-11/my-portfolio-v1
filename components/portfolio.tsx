@@ -27,6 +27,17 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
   const rtl = locale === "ar";
   const t = messages[locale];
 
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    root.dataset.theme = nextTheme;
+    setTheme(nextTheme);
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => root.classList.remove("theme-switching"));
+    });
+  };
+
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("portfolio-theme", theme);
@@ -58,7 +69,7 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
       if (frame) return;
       frame = window.requestAnimationFrame(() => {
         frame = 0;
-        setScrolled(window.scrollY > 36);
+        setScrolled(window.scrollY > 0);
         const headerBottom = document.querySelector(".topbar")?.getBoundingClientRect().bottom ?? 0;
         const marker = window.scrollY + Math.max(headerBottom + 16, window.innerHeight * 0.3);
         let current: string = navigation[0];
@@ -147,8 +158,11 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
       if (portrait) {
         const rect = portrait.getBoundingClientRect();
         const frame = portrait.querySelector<HTMLElement>(".portrait-frame");
-        frame?.style.setProperty("--tilt-x", `${((event.clientX - rect.left) / rect.width - .5) * 10}deg`);
-        frame?.style.setProperty("--tilt-y", `${(.5 - (event.clientY - rect.top) / rect.height) * 10}deg`);
+        const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        frame?.style.setProperty("--tilt-x", `${(x - .5) * 10}deg`);
+        frame?.style.setProperty("--tilt-y", `${(.5 - y) * 10}deg`);
+        frame?.style.setProperty("--tilt-z", `${(x - .5) * 3}deg`);
         return;
       }
       const card = target.closest<HTMLElement>(".card-surface, .stat-card");
@@ -165,14 +179,28 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
         <button className="brand" onClick={() => scrollTo("home")} aria-label={t.homeLabel}>{site.signature}</button>
         <div className="nav-links">{navigation.map((id) => <a key={id} href={`#${id}`} onClick={(event) => { event.preventDefault(); scrollTo(id); }} className={active === id ? "active" : ""} aria-current={active === id ? "location" : undefined}>{active === id && <motion.span className="nav-active-indicator" layoutId="nav-active-indicator" transition={{ type: "spring", stiffness: 420, damping: 34 }} aria-hidden="true"/>}<span className="nav-link-label">{t.nav[id]}</span></a>)}</div>
         <div className="nav-actions">
-          <button className="icon-button theme-toggle-button" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={t.theme} title={t.theme} aria-pressed={theme === "dark"}>
-            <span className="theme-toggle-icon" key={theme} aria-hidden="true">{theme === "dark" ? <icons.sun size={17}/> : <icons.moon size={17}/>}</span>
+          <button className="icon-button theme-toggle-button" onClick={toggleTheme} aria-label={t.theme} title={t.theme} aria-pressed={theme === "dark"}>
+            <span className={`theme-toggle-icon ${theme === "dark" ? "is-dark" : "is-light"}`} key={theme} aria-hidden="true">{theme === "dark" ? <icons.sun size={19} strokeWidth={2.2}/> : <icons.moon size={19} strokeWidth={2.2}/>}</span>
           </button>
           <button className="locale-button language-toggle-button" onClick={() => setLocale(rtl ? "en" : "ar")} aria-label={t.language} aria-pressed={rtl}>
             <icons.globe className="language-toggle-globe" size={15}/><span className="locale-label" key={locale} aria-hidden="true">{rtl ? "AR" : "EN"}</span>
           </button>
           <button className="button button-small button-primary hire-button" onClick={() => scrollTo("contact")}>{t.hire}<icons.arrowUpRight size={15}/></button>
-          <button className="icon-button mobile-menu-button" onClick={() => setMobileOpen((open) => !open)} aria-label={mobileOpen ? t.closeMenu : t.menu} aria-expanded={mobileOpen}><icons.menu size={20}/></button>
+          <button className="icon-button mobile-menu-button" onClick={() => setMobileOpen((open) => !open)} aria-label={mobileOpen ? t.closeMenu : t.menu} aria-expanded={mobileOpen}>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                className="mobile-menu-toggle-icon"
+                key={mobileOpen ? "close" : "menu"}
+                aria-hidden="true"
+                initial={{ opacity: 0, rotate: -90, scale: 0.7 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.7 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                {mobileOpen ? <icons.close size={20}/> : <icons.menu size={20}/>}
+              </motion.span>
+            </AnimatePresence>
+          </button>
         </div>
       </nav>
       <AnimatePresence>{mobileOpen && <motion.div className="mobile-menu" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
@@ -183,9 +211,9 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
         {mobileOpen && <motion.div className="mobile-menu-backdrop" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={() => setMobileOpen(false)} />}
       </AnimatePresence>
 
-      <HeroSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} onScroll={scrollTo}/>
-      <AboutSection t={t} reducedMotion={Boolean(reducedMotion)}/>
-      <ServicesSection t={t} reducedMotion={Boolean(reducedMotion)} onContact={() => scrollTo("contact")}/>
+      <HeroSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} theme={theme} onScroll={scrollTo}/>
+      <AboutSection t={t} reducedMotion={Boolean(reducedMotion)} theme={theme}/>
+      <ServicesSection t={t} reducedMotion={Boolean(reducedMotion)} theme={theme} onContact={() => scrollTo("contact")}/>
       <ProjectsSection t={t} reducedMotion={Boolean(reducedMotion)} onPreview={setSelectedProject}/>
       <JourneySection t={t} reducedMotion={Boolean(reducedMotion)}/>
       <ContactSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} formStatus={formStatus} onSubmit={onSubmit}/>

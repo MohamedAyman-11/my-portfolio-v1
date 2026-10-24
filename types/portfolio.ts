@@ -11,7 +11,11 @@ export type ProjectRepository = {
 
 export type ProjectRecord = {
   id: ProjectId;
-  demoUrl?: string;
+  name: string;
+  demo?:
+    | { type: "website"; url: string }
+    | { type: "video"; url: string };
+  description: string;
   image?: string;
   repositories: readonly ProjectRepository[];
   technologies: readonly string[];
