@@ -1,4 +1,6 @@
-import type { Skill } from "@/types/portfolio";
+import type { Skill, SkillCategory } from "@/types/portfolio";
+
+export const skillCategories = ["frontend", "backend", "tools"] as const satisfies readonly SkillCategory[];
 
 export const skills = [
   { id: "react", name: "React", category: "frontend", icon: "react" },

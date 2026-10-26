@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
@@ -10,7 +10,7 @@ import { socialLinks } from "@/data/social-links";
 import type { Locale, Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { SocialLink } from "@/components/social-link";
-import { fade, rise, type BaseProps } from "./motion";
+import { type BaseProps } from "./motion";
 
 export function HeroSection({
   t,
@@ -29,7 +29,36 @@ export function HeroSection({
     .map((part) => part[0])
     .join("");
   const Arrow = rtl ? icons.arrowLeft : icons.arrowRight;
-  const heroStep = reducedMotion ? fade : rise;
+  const [headingComplete, setHeadingComplete] = useState(reducedMotion);
+  const handleHeadingComplete = useCallback(() => setHeadingComplete(true), []);
+  const revealTransition = (duration: number) => ({
+    duration: reducedMotion ? 0.01 : duration,
+    ease: [0.22, 1, 0.36, 1] as const,
+  });
+  const eyebrowReveal = {
+    hidden: { opacity: 0, x: rtl ? 12 : -12 },
+    visible: { opacity: 1, x: 0, transition: revealTransition(0.5) },
+  };
+  const headingReveal = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: revealTransition(0.72) },
+  };
+  const roleReveal = {
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: revealTransition(0.52) },
+  };
+  const descriptionReveal = {
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: revealTransition(0.62) },
+  };
+  const actionsReveal = {
+    hidden: { opacity: 0, y: 16, scale: 0.97 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: revealTransition(0.58) },
+  };
+  const socialsReveal = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: revealTransition(0.48) },
+  };
 
   return (
     <section id="home" className="hero section-anchor">
@@ -43,11 +72,9 @@ export function HeroSection({
             frame?.style.setProperty("--tilt-y", "0deg");
             frame?.style.setProperty("--tilt-z", "0deg");
           }}
-          initial={
-            reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 14 }
-          }
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: reducedMotion ? 0.32 : 0.8, delay: 1.05 }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.94, y: 18 }}
+          animate={headingComplete ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.94, y: 18 }}
+          transition={{ duration: reducedMotion ? 0.01 : 0.68, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="portrait-orbit orbit-a" />
           <div className="portrait-orbit orbit-b" />
@@ -77,6 +104,7 @@ export function HeroSection({
                 alt={t.photoAlt}
                 className="portrait-photo"
                 fill
+                preload
                 sizes="(max-width: 760px) 80vw, 400px"
               />
             ) : (
@@ -91,11 +119,11 @@ export function HeroSection({
               <motion.div
                 className={`float-tag tag-${badge.position}`}
                 key={badge.name}
-                initial={reducedMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={reducedMotion ? false : { opacity: 0, scale: 0.92 }}
+                animate={headingComplete ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
                 transition={{
-                  duration: reducedMotion ? 0.2 : 0.42,
-                  delay: reducedMotion ? 0 : 1.05 + index * 0.16,
+                  duration: reducedMotion ? 0.01 : 0.38,
+                  delay: reducedMotion ? 0 : 0.12 + index * 0.1,
                 }}
               >
                 <span className="tag-mark">
@@ -118,38 +146,39 @@ export function HeroSection({
         </motion.div>
         <motion.div
           className="hero-copy"
-          initial="hidden"
+          initial={reducedMotion ? false : "hidden"}
           animate="visible"
           variants={{
             hidden: {},
             visible: {
-              transition: { staggerChildren: 0.14, delayChildren: 0.16 },
+              transition: {
+                staggerChildren: reducedMotion ? 0 : 0.2,
+                delayChildren: reducedMotion ? 0 : 0.08,
+              },
             },
           }}
         >
-          <motion.div className="eyebrow hero-eyebrow" variants={heroStep}>
+          <motion.div className="eyebrow hero-eyebrow" variants={eyebrowReveal}>
             <span className="eyebrow-line" />
             {t.heroEyebrow}
           </motion.div>
-          <motion.h1
-            variants={heroStep}
-            aria-label={`${t.heroLead} ${t.heroAccent}`}
-          >
+          <motion.h1 variants={headingReveal} aria-label={`${t.heroLead} ${t.heroAccent}`}>
             <TypewriterHeading
               lead={t.heroLead}
               accent={t.heroAccent}
               reducedMotion={reducedMotion}
+              onComplete={handleHeadingComplete}
             />
           </motion.h1>
-          <motion.p className="hero-role" variants={heroStep}>
+          <motion.p className="hero-role" variants={roleReveal}>
             {t.heroRole}
             <span className="role-divider" aria-hidden="true" />
             {site.location[locale]}
           </motion.p>
-          <motion.p className="hero-description" variants={heroStep}>
+          <motion.p className="hero-description" variants={descriptionReveal}>
             {t.heroBody}
           </motion.p>
-          <motion.div className="hero-actions" variants={heroStep}>
+          <motion.div className="hero-actions" variants={actionsReveal}>
             <button
               className="button button-primary"
               onClick={() => onScroll("projects")}
@@ -172,10 +201,10 @@ export function HeroSection({
               </span>
             )}
           </motion.div>
-          <motion.div className="hero-socials" variants={heroStep}>
+          <motion.div className="hero-socials" variants={socialsReveal}>
             <span>{t.followMe}</span>
             <i />
-            {socialLinks.map((social) => (
+            {socialLinks.filter((social) => social.id !== "facebook" && social.id !== "whatsapp").map((social) => (
               <SocialLink key={social.id} social={social} />
             ))}
           </motion.div>
@@ -193,33 +222,40 @@ function TypewriterHeading({
   lead,
   accent,
   reducedMotion,
+  onComplete,
 }: {
   lead: string;
   accent: string;
   reducedMotion: boolean;
+  onComplete: () => void;
 }) {
   const full = `${lead} ${accent}`;
-  const [visibleCount, setVisibleCount] = useState(
-    reducedMotion ? full.length : 0,
-  );
+  const [visibleCount, setVisibleCount] = useState(reducedMotion ? full.length : 0);
 
   useEffect(() => {
     if (reducedMotion) {
       setVisibleCount(full.length);
+      onComplete();
       return;
     }
+
     let count = 0;
+    setVisibleCount(0);
     let timer = window.setTimeout(function typeNext() {
       count += 1;
       setVisibleCount(count);
       if (count < full.length) timer = window.setTimeout(typeNext, 78);
+      else onComplete();
     }, 420);
+
     return () => window.clearTimeout(timer);
-  }, [full, reducedMotion]);
+  }, [full, reducedMotion, onComplete]);
 
   const visibleLead = full.slice(0, Math.min(visibleCount, lead.length));
-  const visibleAccent =
-    visibleCount > lead.length ? full.slice(lead.length + 1, visibleCount) : "";
+  const visibleAccent = visibleCount > lead.length
+    ? full.slice(lead.length + 1, visibleCount)
+    : "";
+
   return (
     <>
       <span>{visibleLead}</span>

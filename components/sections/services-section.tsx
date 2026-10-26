@@ -4,14 +4,16 @@ import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
 import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
+import { services } from "@/data/services";
 import { reveal, type BaseProps } from "./motion";
 
 export function ServicesSection({
   t,
   reducedMotion,
   theme,
+  locale,
   onContact,
-}: BaseProps & { theme: Theme; onContact: () => void }) {
+}: BaseProps & { theme: Theme; locale: "en" | "ar"; onContact: () => void }) {
   return (
     <section className="section services-section section-anchor" id="services">
       <div className="section-inner">
@@ -30,38 +32,34 @@ export function ServicesSection({
           <p>{t.servicesIntro}</p>
         </motion.div>
         <div className="service-grid">
-          {t.services.map((service, index) => {
+          {services.map((service, index) => {
+            const copy = service.copy[locale];
             return (
               <motion.article
                 className="service-card card-surface"
-                key={service.title}
+                key={service.id}
                 {...reveal(reducedMotion, (index % 3) * 0.08)}
               >
                 <div className="service-top">
                   <span className={`service-icon service-icon-${index + 1}`}>
-                    {index === 0 ? (
+                    {service.icon.type === "technology" ? (
                       <TechnologyIcon
-                        id="react"
+                        id={service.icon.id}
                         theme={theme}
                         style={{ width: 28, height: 28 }}
                       />
-                    ) : index === 1 ? (
-                      <TechnologyIcon
-                        id="express"
-                        theme={theme}
-                        style={{ width: 28, height: 28 }}
-                      />
-                    ) : index === 2 ? (
-                      <icons.database size={28} />
                     ) : (
-                      <icons.rocket size={28} />
+                      (() => {
+                        const ServiceIcon = icons[service.icon.id];
+                        return <ServiceIcon size={28} />;
+                      })()
                     )}
                   </span>
                 </div>
-                <h3>{service.title}</h3>
-                <p>{service.body}</p>
+                <h3>{copy.title}</h3>
+                <p>{copy.body}</p>
                 <div className="service-tags">
-                  {service.tags.map((tag) => (
+                  {copy.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>

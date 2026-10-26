@@ -6,6 +6,7 @@ import Image from "next/image";
 import { icons } from "@/config/icons";
 import type { Messages } from "@/lib/i18n";
 import type { ProjectRecord } from "@/types/portfolio";
+import type { Locale } from "@/types/portfolio";
 
 type PreviewSize = "desktop" | "mobile";
 
@@ -47,9 +48,10 @@ function isDirectVideo(url: string) {
   }
 }
 
-export function ProjectPreviewDialog({ project, t, onClose }: {
+export function ProjectPreviewDialog({ project, t, locale, onClose }: {
   project: ProjectRecord | null;
   t: Messages;
+  locale: Locale;
   onClose: () => void;
 }) {
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -87,7 +89,7 @@ export function ProjectPreviewDialog({ project, t, onClose }: {
     };
   }, [project, onClose]);
 
-  const copy = project ? t.projects[project.id] : null;
+  const copy = project?.copy[locale] ?? null;
   const demo = project?.demo;
   const videoEmbedUrl = demo?.type === "video" ? getVideoEmbedUrl(demo.url) : null;
   const directVideo = demo?.type === "video" && isDirectVideo(demo.url);
@@ -96,7 +98,7 @@ export function ProjectPreviewDialog({ project, t, onClose }: {
     <motion.div className="project-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" initial={{ opacity: 0, y: reducedMotion ? 0 : 22, scale: reducedMotion ? 1 : 0.965 }} animate={{ opacity: 1, y: 0, scale: 1, transition: reducedMotion ? { duration: 0.01 } : { type: "spring", stiffness: 320, damping: 29, mass: 0.85 } }} exit={{ opacity: 0, y: reducedMotion ? 0 : 12, scale: reducedMotion ? 1 : 0.985, transition: { duration: reducedMotion ? 0.01 : 0.16, ease: "easeIn" } }}>
       <div className="demo-header">
         <div className="demo-project-heading">
-          <span className="demo-project-icon" aria-hidden="true">
+          <span className={`demo-project-icon ${project.image ? "has-image" : ""}`} aria-hidden="true">
             {project.image
               ? <Image src={project.image} alt="" width={42} height={42} priority />
               : demo?.type === "video" ? <icons.play size={18} /> : <icons.monitor size={18} />}

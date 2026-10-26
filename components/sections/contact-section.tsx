@@ -69,6 +69,7 @@ export function ContactSection({
                     key={social.id}
                     href={social.url || undefined}
                     aria-label={social.label}
+                    title={social.label}
                     aria-disabled={!social.url || undefined}
                     className={`social-link social-${social.id}${!social.url ? " link-muted" : ""}`}
                     onClick={
@@ -80,6 +81,14 @@ export function ContactSection({
                     <SocialIcon id={social.icon} size={23} />
                   </a>
                 ))}
+                <a
+                  href={`mailto:${site.email}`}
+                  aria-label={site.email}
+                  title={site.email}
+                  className="social-link social-email"
+                >
+                  <icons.mail size={22} />
+                </a>
               </div>
             </section>
             <article className="contact-email-card card-surface">

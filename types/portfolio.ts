@@ -1,7 +1,7 @@
 import type { TechnologyIconId } from "@/config/icons";
 
 export type Locale = "en" | "ar";
-export type ProjectId = "project-01" | "project-02" | "project-03";
+export type ProjectId = string;
 export type Theme = "dark" | "light";
 
 export type ProjectRepository = {
@@ -11,11 +11,10 @@ export type ProjectRepository = {
 
 export type ProjectRecord = {
   id: ProjectId;
-  name: string;
+  copy: Record<Locale, { name: string; type: string; description: string }>;
   demo?:
     | { type: "website"; url: string }
     | { type: "video"; url: string };
-  description: string;
   image?: string;
   repositories: readonly ProjectRepository[];
   technologies: readonly string[];

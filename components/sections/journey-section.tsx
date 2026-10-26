@@ -6,10 +6,8 @@ import { reveal, type BaseProps } from "./motion";
 
 export function JourneySection({ t, reducedMotion }: BaseProps) {
   const journeyIcons = [
-    icons.search,
-    icons.compass,
     icons.codeXml,
-    icons.sparkles,
+    icons.rocket,
   ];
   return (
     <section className="section journey-section section-anchor" id="journey">
@@ -41,8 +39,15 @@ export function JourneySection({ t, reducedMotion }: BaseProps) {
                   <JourneyIcon size={21} />
                 </div>
                 <div className="journey-card card-surface">
+                  <div className="journey-meta">
+                    <span className={`journey-period journey-period-${index + 1}`}>{step.year}</span>
+                    <span className="journey-count">{step.year}</span>
+                  </div>
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
+                  <div className="journey-tags">
+                    {step.tags.map((tag) => <span className="journey-tag" key={tag}>{tag}</span>)}
+                  </div>
                 </div>
               </motion.article>
             );

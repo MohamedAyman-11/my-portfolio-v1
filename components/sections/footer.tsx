@@ -17,6 +17,7 @@ export function Footer({
   onTop: () => void;
 }) {
   const Up = locale === "ar" ? icons.arrowUpLeft : icons.arrowUpRight;
+  const linkedInUrl = socialLinks.find((social) => social.id === "linkedin")?.url;
   return (
     <footer className="footer">
       <div className="footer-main">
@@ -25,24 +26,29 @@ export function Footer({
           <small>{t.footerRole}</small>
         </button>
         <div className="footer-socials">
-          {socialLinks.map((social) => (
+          {socialLinks.filter((social) => social.id === "github" || social.id === "linkedin").map((social) => (
             <SocialLink key={social.id} social={social} />
           ))}
         </div>
-        <button className="back-top" onClick={onTop}>
+        <button className="back-top" type="button" onClick={onTop} aria-label={t.top}>
           {t.top}
-          <Up size={15} />
+          <span className="back-top-icon"><Up size={15} /></span>
         </button>
       </div>
       <div className="footer-divider" />
       <div className="footer-bottom">
         <span>
           © {new Date().getFullYear()} {site.name}
-        </span>
-        <span>
-          {t.copyright}
           <i> ✳ </i>
+          {t.copyright}
         </span>
+        <p className="footer-credit">
+          {'<Developed by="'}
+          <a className="footer-credit-link" href={linkedInUrl} target="_blank" rel="noreferrer">
+            Mohamed Ayman
+          </a>
+          {'" andPowered=true />'}
+        </p>
         <span className="footer-location">{site.location[locale]}</span>
       </div>
     </footer>

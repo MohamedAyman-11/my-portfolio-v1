@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
-import { skills } from "@/data/skills";
+import { skills, skillCategories } from "@/data/skills";
 import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { reveal, revealFromSide, type BaseProps } from "./motion";
@@ -19,7 +19,6 @@ export function AboutSection({
     icons.cpu,
     icons.graduationCap,
   ];
-  const groupedSkills = ["frontend", "backend", "tools"] as const;
 
   return (
     <section className="section about-section section-anchor" id="about">
@@ -67,15 +66,15 @@ export function AboutSection({
               </span>
               <h3 className="font-bold text-2xl!">{t.storyTitle}</h3>
             </div>
-            <p>{t.aboutBody}</p>
-            <p>{t.aboutBody2}</p>
-            <p>{t.aboutBody3}</p>
+            {t.aboutParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </motion.article>
           <motion.div
             className="about-right"
             {...revealFromSide(reducedMotion, "right", 0.12)}
           >
-            {groupedSkills.map((category, index) => (
+            {skillCategories.map((category, index) => (
               <section
                 className={`skills-card card-surface skill-group skill-group-${index + 1}`}
                 key={category}

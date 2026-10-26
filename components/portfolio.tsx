@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useReducedMotion } from "framer-motion";
 import { site } from "@/config/site";
 import { navigation } from "@/data/navigation";
@@ -19,9 +19,7 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
   const [scrolled, setScrolled] = useState(false);
   const [formStatus, setFormStatus] = useState("");
   const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(null);
-  const [pointer, setPointer] = useState({ x: -100, y: -100 });
-  const [pointerTarget, setPointerTarget] = useState(false);
-  const [pointerAccent, setPointerAccent] = useState<string | null>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const reducedMotion = useReducedMotion();
   const rtl = locale === "ar";
@@ -116,16 +114,34 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
   useEffect(() => {
     const media = window.matchMedia("(hover: hover) and (pointer: fine)");
     if (!media.matches || reducedMotion) return;
-    const move = (event: PointerEvent) => setPointer({ x: event.clientX, y: event.clientY });
+    const move = (event: PointerEvent) => {
+      cursorRef.current?.style.setProperty("transform", `translate3d(${event.clientX}px,${event.clientY}px,0)`);
+    };
     const over = (event: PointerEvent) => {
       const target = event.target as HTMLElement;
       const serviceCard = target.closest<HTMLElement>(".service-card");
-      setPointerTarget(!!target.closest("a,button,[role=button],.service-card"));
-      setPointerAccent(serviceCard ? getComputedStyle(serviceCard).getPropertyValue("--service-accent").trim() : null);
+      const cursor = cursorRef.current;
+      if (!cursor) return;
+      cursor.classList.toggle("is-over", !!target.closest("a,button,[role=button],.service-card"));
+      cursor.classList.toggle("is-service-hover", !!serviceCard);
+      if (serviceCard) {
+        cursor.style.setProperty("--cursor-accent", getComputedStyle(serviceCard).getPropertyValue("--service-accent").trim() || "var(--purple)");
+      } else {
+        cursor.style.setProperty("--cursor-accent", "var(--purple)");
+      }
+    };
+    const leave = () => cursorRef.current?.classList.remove("is-over", "is-service-hover");
+    const out = (event: PointerEvent) => {
+      if (event.relatedTarget === null) leave();
     };
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerover", over, { passive: true });
-    return () => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerover", over); };
+    window.addEventListener("pointerout", out, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerover", over);
+      window.removeEventListener("pointerout", out);
+    };
   }, [reducedMotion]);
 
   const scrollTo = (id: string) => {
@@ -174,7 +190,7 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
     }}>
       <div className="scroll-progress" aria-hidden="true"><span ref={progressRef}/></div>
       <div className="ambient ambient-one" aria-hidden="true"/><div className="ambient ambient-two" aria-hidden="true"/>
-      <div className={`custom-cursor ${pointerTarget ? "is-over" : ""} ${pointerAccent ? "is-service-hover" : ""}`} style={{ transform: `translate3d(${pointer.x}px,${pointer.y}px,0)`, "--cursor-accent": pointerAccent ?? "var(--purple)" } as CSSProperties} aria-hidden="true"><span/></div>
+      <div ref={cursorRef} className="custom-cursor" aria-hidden="true"><span/></div>
       <SiteHeader
         t={t}
         locale={locale}
@@ -191,12 +207,12 @@ export default function Portfolio({ initialLocale, initialTheme }: { initialLoca
 
       <HeroSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} theme={theme} onScroll={scrollTo}/>
       <AboutSection t={t} reducedMotion={Boolean(reducedMotion)} theme={theme}/>
-      <ServicesSection t={t} reducedMotion={Boolean(reducedMotion)} theme={theme} onContact={() => scrollTo("contact")}/>
-      <ProjectsSection t={t} reducedMotion={Boolean(reducedMotion)} onPreview={setSelectedProject}/>
+      <ServicesSection t={t} reducedMotion={Boolean(reducedMotion)} theme={theme} locale={locale} onContact={() => scrollTo("contact")}/>
+      <ProjectsSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} onPreview={setSelectedProject}/>
       <JourneySection t={t} reducedMotion={Boolean(reducedMotion)}/>
       <ContactSection t={t} reducedMotion={Boolean(reducedMotion)} locale={locale} formStatus={formStatus} onSubmit={onSubmit}/>
       <Footer t={t} locale={locale} onTop={() => scrollTo("home")}/>
-      <ProjectPreviewDialog project={selectedProject} t={t} onClose={closePreview}/>
+      <ProjectPreviewDialog project={selectedProject} t={t} locale={locale} onClose={closePreview}/>
     </main>
   </>;
 }
