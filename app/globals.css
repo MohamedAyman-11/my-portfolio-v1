@@ -552,6 +552,21 @@ html[data-theme="light"] .locale-button:hover {
 
 .mobile-menu-button {
   display: none;
+  translate: none;
+  transform: none;
+}
+
+.mobile-menu-button:hover,
+.mobile-menu-button:active {
+  translate: none;
+  transform: none;
+}
+
+.mobile-menu-close,
+.mobile-menu-close:hover,
+.mobile-menu-close:active {
+  translate: none;
+  transform: none;
 }
 
 .button {
@@ -625,30 +640,47 @@ html[data-theme="light"] .locale-button:hover {
 }
 
 .mobile-menu {
-  position: absolute;
-  top: calc(100% + 9px);
-  inset-inline: 13px;
-  max-width: 1110px;
-  margin-inline: auto;
-  padding: 14px;
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: min(86vw, 360px);
+  height: 100vh;
+  height: 100dvh;
+  padding: max(28px, env(safe-area-inset-top)) 18px max(22px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: 9px;
-  border: 1px solid var(--line-strong);
-  border-radius: 18px;
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(40px) saturate(150%);
-  backdrop-filter: blur(40px) saturate(150%);
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 0 22px 22px 0;
+  background: rgba(16, 17, 25, .82);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
+  backdrop-filter: blur(32px) saturate(150%);
+  box-shadow: 18px 0 55px rgba(0, 0, 0, .32), inset 0 1px rgba(255, 255, 255, .07);
+  z-index: 32;
 }
 
 .mobile-menu-backdrop {
   position: fixed;
-  z-index: 25;
+  z-index: 31;
   inset: 0;
   background: rgba(8, 9, 14, .16);
   -webkit-backdrop-filter: blur(10px) saturate(125%);
   backdrop-filter: blur(10px) saturate(125%);
+}
+
+html[data-theme="light"] .mobile-menu {
+  border-color: rgba(40, 37, 56, .1);
+  background: rgba(249, 249, 253, .88);
+  box-shadow: 18px 0 55px rgba(37, 32, 57, .18), inset 0 1px rgba(255, 255, 255, .9);
+}
+
+html[dir="rtl"] .mobile-menu {
+  border-radius: 22px 0 0 22px;
+  box-shadow: -18px 0 55px rgba(0, 0, 0, .32), inset 0 1px rgba(255, 255, 255, .07);
+}
+
+html[dir="rtl"][data-theme="light"] .mobile-menu {
+  box-shadow: -18px 0 55px rgba(37, 32, 57, .18), inset 0 1px rgba(255, 255, 255, .9);
 }
 
 .mobile-menu a {
@@ -715,7 +747,15 @@ html[data-theme="light"] .locale-button:hover {
 
 .mobile-menu .button {
   width: 100%;
-  margin-top: 2px;
+  margin-top: auto;
+}
+
+.mobile-menu .mobile-menu-close {
+  align-self: flex-end;
+  flex: 0 0 42px;
+  width: 42px;
+  min-height: 42px;
+  margin-bottom: 8px;
 }
 
 .section-anchor {
@@ -4168,5 +4208,26 @@ html[data-theme="light"] .footer-socials .social-link.social-github:hover {
   .project-repositories a:hover {
     translate: none !important;
     scale: 1 !important;
+  }
+}
+
+/* Keep the navbar above the menu-only backdrop while the page content below it
+   receives the blur. */
+@media (max-width: 992px) {
+  .mobile-menu-backdrop {
+    background: rgba(7, 8, 13, .12);
+    -webkit-backdrop-filter: blur(12px) saturate(125%);
+    backdrop-filter: blur(12px) saturate(125%);
+  }
+
+  html[data-theme="light"] .mobile-menu-backdrop {
+    background: rgba(27, 29, 43, .08);
+  }
+}
+
+@media (max-width: 760px) {
+  .mobile-menu {
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }

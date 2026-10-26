@@ -1,6 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 import { icons } from "@/config/icons";
 import { site } from "@/config/site";
 import { navigation } from "@/data/navigation";
@@ -35,6 +37,11 @@ export function SiteHeader({
   onCloseMobile,
 }: SiteHeaderProps) {
   const rtl = locale === "ar";
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalRoot(document.body);
+  }, []);
 
   const handleNavigation = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
@@ -42,6 +49,7 @@ export function SiteHeader({
   };
 
   return (
+    <>
     <header className={`topbar-wrap${scrolled ? " is-scrolled" : ""}`}>
       <nav className={`topbar${scrolled ? " is-scrolled" : ""}`} aria-label={t.primaryNavigation}>
         <button className="brand" onClick={() => onNavigate("home")} aria-label={t.homeLabel}>
@@ -105,9 +113,9 @@ export function SiteHeader({
                 className="mobile-menu-toggle-icon"
                 key={mobileOpen ? "close" : "menu"}
                 aria-hidden="true"
-                initial={{ opacity: 0, rotate: -90, scale: 0.7 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 90, scale: 0.7 }}
+                initial={{ opacity: 0, rotate: -45 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 45 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
               >
                 {mobileOpen ? <icons.close size={20} /> : <icons.menu size={20} />}
@@ -117,40 +125,54 @@ export function SiteHeader({
         </div>
       </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div className="mobile-menu" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-            {navigation.map((id) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                onClick={(event) => handleNavigation(event, id)}
-                className={activeSection === id ? "active" : ""}
-                aria-current={activeSection === id ? "location" : undefined}
-              >
-                {t.nav[id]}<span aria-hidden="true">{rtl ? "←" : "→"}</span>
-              </a>
-            ))}
-            <button className="button button-primary" onClick={() => onNavigate("contact")}>
-              {t.hire}<icons.arrowUpRight size={16} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className="mobile-menu-backdrop"
-            aria-hidden="true"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onCloseMobile}
-          />
-        )}
-      </AnimatePresence>
     </header>
+    {portalRoot && createPortal(
+      <>
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              className="mobile-menu-backdrop"
+              aria-hidden="true"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={onCloseMobile}
+            />
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              className="mobile-menu"
+              initial={{ opacity: 0, x: rtl ? "100%" : "-100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: rtl ? "100%" : "-100%" }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button className="icon-button mobile-menu-close" onClick={onCloseMobile} aria-label={t.closeMenu}>
+                <icons.close size={19} />
+              </button>
+              {navigation.map((id) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  onClick={(event) => handleNavigation(event, id)}
+                  className={activeSection === id ? "active" : ""}
+                  aria-current={activeSection === id ? "location" : undefined}
+                >
+                  {t.nav[id]}<span aria-hidden="true">{rtl ? "←" : "→"}</span>
+                </a>
+              ))}
+              <button className="button button-primary" onClick={() => onNavigate("contact")}>
+                {t.hire}<icons.arrowUpRight size={16} />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </>,
+      portalRoot,
+    )}
+    </>
   );
 }
