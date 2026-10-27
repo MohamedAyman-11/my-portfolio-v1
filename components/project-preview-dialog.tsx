@@ -128,9 +128,9 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
       </div>
 
       <div className={`demo-stage ${previewSize === "mobile" ? "is-mobile" : ""}`}>
-        {demo?.type === "website" && <iframe className="demo-iframe" src={demo.url} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="fullscreen; clipboard-read; clipboard-write" onLoad={markPreviewLoaded} />}
+        {demo?.type === "website" && <iframe className="demo-iframe" src={demo.url} title={`${copy.name} ${t.demoMode}`} loading="eager" allow="fullscreen; clipboard-read; clipboard-write" onLoad={markPreviewLoaded} />}
         {demo?.type === "video" && directVideo && <video className="demo-video" src={demo.url} controls playsInline preload="metadata" onLoadedData={markPreviewLoaded} onCanPlay={markPreviewLoaded} onError={markPreviewLoaded} />}
-        {demo?.type === "video" && !directVideo && videoEmbedUrl && <iframe className="demo-iframe" src={videoEmbedUrl} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen onLoad={markPreviewLoaded} />}
+        {demo?.type === "video" && !directVideo && videoEmbedUrl && <iframe className="demo-iframe" src={videoEmbedUrl} title={`${copy.name} ${t.demoMode}`} loading="eager" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen onLoad={markPreviewLoaded} />}
         {previewLoading && <div className="demo-preview-loading" role="status" aria-live="polite"><span className="demo-preview-spinner" aria-hidden="true"/><span>{t.loadingPreview}</span></div>}
         {!demo || (demo.type === "video" && !directVideo && !videoEmbedUrl) ? <div className="dialog-preview">
           <div className="preview-icon"><icons.code size={25}/></div>

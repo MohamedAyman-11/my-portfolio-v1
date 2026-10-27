@@ -70,14 +70,24 @@ export function AboutSection({
               <p key={paragraph}>{paragraph}</p>
             ))}
           </motion.article>
-          <motion.div
-            className="about-right"
-            {...revealFromSide(reducedMotion, "right", 0.12)}
-          >
+          <div className="about-right">
             {skillCategories.map((category, index) => (
-              <section
+              <motion.section
                 className={`skills-card card-surface skill-group skill-group-${index + 1}`}
                 key={category}
+                initial={reducedMotion ? false : {
+                  opacity: 0,
+                  y: index === 0 ? 24 : index === 2 ? -18 : 0,
+                  x: index === 1 ? 24 : 0,
+                  scale: index === 2 ? 0.96 : 1,
+                }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.18 }}
+                transition={{
+                  duration: reducedMotion ? 0.01 : 0.7,
+                  delay: reducedMotion ? 0 : index * 0.12,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
                 <h3>
                   <span className="skill-group-dot" />
@@ -103,9 +113,9 @@ export function AboutSection({
                       );
                     })}
                 </div>
-              </section>
+              </motion.section>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import dynamic from "next/dynamic";
 import { useReducedMotion } from "framer-motion";
 import { site } from "@/config/site";
 import { navigation } from "@/data/navigation";
@@ -22,8 +23,15 @@ import {
   ProjectsSection,
   ServicesSection,
 } from "@/components/sections";
-import { ProjectPreviewDialog } from "@/components/project-preview-dialog";
 import { SiteHeader } from "@/components/site-header";
+
+const ProjectPreviewDialog = dynamic(
+  () =>
+    import("@/components/project-preview-dialog").then(
+      (module) => module.ProjectPreviewDialog,
+    ),
+  { ssr: false },
+);
 
 export default function Portfolio({
   initialLocale,
@@ -334,12 +342,14 @@ export default function Portfolio({
           onSubmit={onSubmit}
         />
         <Footer t={t} locale={locale} onTop={() => scrollTo("home")} />
-        <ProjectPreviewDialog
-          project={selectedProject}
-          t={t}
-          locale={locale}
-          onClose={closePreview}
-        />
+        {selectedProject && (
+          <ProjectPreviewDialog
+            project={selectedProject}
+            t={t}
+            locale={locale}
+            onClose={closePreview}
+          />
+        )}
       </main>
     </>
   );

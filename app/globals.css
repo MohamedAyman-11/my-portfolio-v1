@@ -420,6 +420,8 @@ html[data-theme="light"] .locale-button:hover {
 
 .icon-button,
 .locale-button {
+  position: relative;
+  overflow: hidden;
   min-width: 44px;
   min-height: 44px;
   padding: 0;
@@ -433,6 +435,26 @@ html[data-theme="light"] .locale-button:hover {
   color: var(--muted);
   cursor: pointer;
   transition: background .2s, color .2s, border-color .2s;
+}
+
+.icon-button::after,
+.locale-button::after,
+.button::after {
+  content: "";
+  position: absolute;
+  inset: -35% auto -35% -75%;
+  width: 42%;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, .06) 30%, rgba(255, 255, 255, .48) 50%, rgba(255, 255, 255, .08) 70%, transparent 90%);
+  transform: translateX(-140%) skewX(-18deg);
+  transition: transform .9s cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+
+.icon-button:hover::after,
+.locale-button:hover::after,
+.button:not(.button-disabled):hover::after {
+  transform: translateX(540%) skewX(-18deg);
 }
 
 .icon-button:hover,
@@ -570,6 +592,8 @@ html[data-theme="light"] .locale-button:hover {
 }
 
 .button {
+  position: relative;
+  overflow: hidden;
   min-height: 52px;
   padding: 0 23px;
   display: inline-flex;
@@ -1512,6 +1536,7 @@ html[data-theme="light"] .tag-mark {
 .about-story-title h3 {
   margin: 0;
   font-size: 26px;
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -.03em;
 }
@@ -2453,6 +2478,7 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
 .contact-card-heading h3 {
   margin: 0;
   font-size: 22px;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -2521,6 +2547,7 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
 .contact-connect h3 {
   margin: 0 0 15px;
   font-size: 17px;
+  font-weight: 700;
 }
 
 .contact-socials {
@@ -2629,6 +2656,7 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
 .contact-form>h3 {
   margin: 0 0 5px;
   font-size: 27px;
+  font-weight: 700;
   line-height: 1.25;
   letter-spacing: -.03em;
 }
@@ -2991,6 +3019,7 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
 }
 
 .demo-stage {
+  position: relative;
   min-height: 0;
   flex: 1;
   padding: 24px;
@@ -2998,6 +3027,37 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
   justify-content: center;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 0%, rgba(70, 55, 120, .13), transparent 60%), var(--bg);
+}
+
+.demo-preview-loading {
+  position: absolute;
+  z-index: 2;
+  inset: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.demo-preview-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--line-strong);
+  border-top-color: var(--purple);
+  border-right-color: var(--cyan);
+  border-radius: 50%;
+  animation: demo-preview-spin .8s linear infinite;
+}
+
+@keyframes demo-preview-spin {
+  to { transform: rotate(360deg); }
 }
 
 .demo-iframe,
@@ -3050,6 +3110,7 @@ html[data-theme="light"] .journey-card:hover .journey-tag {
 .dialog-preview h3 {
   margin: 14px 0 4px;
   font-size: 18px;
+  font-weight: 700;
 }
 
 .dialog-preview p {
@@ -3932,6 +3993,11 @@ input[type="email"] {
 
   .demo-stage {
     padding: 12px;
+  }
+
+  .demo-preview-loading {
+    inset: 12px;
+    font-size: 13px;
   }
 
   .dialog-preview {
