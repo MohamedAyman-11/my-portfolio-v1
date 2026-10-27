@@ -49,7 +49,6 @@ export default function Portfolio({
   const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(
     null,
   );
-  const cursorRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const reducedMotion = useReducedMotion();
   const rtl = locale === "ar";
@@ -159,51 +158,6 @@ export default function Portfolio({
     };
   }, []);
 
-  useEffect(() => {
-    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
-    if (!media.matches || reducedMotion) return;
-    const move = (event: PointerEvent) => {
-      cursorRef.current?.style.setProperty(
-        "transform",
-        `translate3d(${event.clientX}px,${event.clientY}px,0)`,
-      );
-    };
-    const over = (event: PointerEvent) => {
-      const target = event.target as HTMLElement;
-      const serviceCard = target.closest<HTMLElement>(".service-card");
-      const cursor = cursorRef.current;
-      if (!cursor) return;
-      cursor.classList.toggle(
-        "is-over",
-        !!target.closest("a,button,[role=button],.service-card"),
-      );
-      cursor.classList.toggle("is-service-hover", !!serviceCard);
-      if (serviceCard) {
-        cursor.style.setProperty(
-          "--cursor-accent",
-          getComputedStyle(serviceCard)
-            .getPropertyValue("--service-accent")
-            .trim() || "var(--purple)",
-        );
-      } else {
-        cursor.style.setProperty("--cursor-accent", "var(--purple)");
-      }
-    };
-    const leave = () =>
-      cursorRef.current?.classList.remove("is-over", "is-service-hover");
-    const out = (event: PointerEvent) => {
-      if (event.relatedTarget === null) leave();
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("pointerover", over, { passive: true });
-    window.addEventListener("pointerout", out, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerover", over);
-      window.removeEventListener("pointerout", out);
-    };
-  }, [reducedMotion]);
-
   const scrollTo = (id: string) => {
     setMobileOpen(false);
     window.requestAnimationFrame(() =>
@@ -291,9 +245,6 @@ export default function Portfolio({
         </div>
         <div className="ambient ambient-one" aria-hidden="true" />
         <div className="ambient ambient-two" aria-hidden="true" />
-        <div ref={cursorRef} className="custom-cursor" aria-hidden="true">
-          <span />
-        </div>
         <SiteHeader
           t={t}
           locale={locale}
