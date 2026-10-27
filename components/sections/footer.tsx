@@ -42,7 +42,7 @@ export function Footer({
           <i> ✳ </i>
           {t.copyright}
         </span>
-        <p className="footer-credit">
+        <p className="footer-credit" dir="ltr">
           {'<Developed by="'}
           <a className="footer-credit-link" href={linkedInUrl} target="_blank" rel="noreferrer">
             Mohamed Ayman

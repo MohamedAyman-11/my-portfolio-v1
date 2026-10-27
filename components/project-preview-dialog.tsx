@@ -57,6 +57,7 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
   const closeButton = useRef<HTMLButtonElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
   const [previewSelection, setPreviewSelection] = useState<{ projectId: string; size: PreviewSize } | null>(null);
+  const [loadedPreview, setLoadedPreview] = useState<string | null>(null);
   const reducedMotion = useReducedMotion();
   const previewSize = project && previewSelection?.projectId === project.id ? previewSelection.size : "desktop";
   const selectPreviewSize = (size: PreviewSize) => {
@@ -93,6 +94,14 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
   const demo = project?.demo;
   const videoEmbedUrl = demo?.type === "video" ? getVideoEmbedUrl(demo.url) : null;
   const directVideo = demo?.type === "video" && isDirectVideo(demo.url);
+  const previewKey = demo ? `${project?.id}:${demo.type}:${demo.url}` : null;
+  const previewLoading = Boolean(previewKey && loadedPreview !== previewKey);
+  useEffect(() => {
+    setLoadedPreview(null);
+  }, [project?.id, demo?.url]);
+  const markPreviewLoaded = () => {
+    if (previewKey) setLoadedPreview(previewKey);
+  };
 
   return <AnimatePresence initial={false}>{project && copy && <motion.div className="dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0.01 : 0.2, ease: "easeOut" }}>
     <motion.div className="project-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" initial={{ opacity: 0, y: reducedMotion ? 0 : 22, scale: reducedMotion ? 1 : 0.965 }} animate={{ opacity: 1, y: 0, scale: 1, transition: reducedMotion ? { duration: 0.01 } : { type: "spring", stiffness: 320, damping: 29, mass: 0.85 } }} exit={{ opacity: 0, y: reducedMotion ? 0 : 12, scale: reducedMotion ? 1 : 0.985, transition: { duration: reducedMotion ? 0.01 : 0.16, ease: "easeIn" } }}>
@@ -119,9 +128,10 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
       </div>
 
       <div className={`demo-stage ${previewSize === "mobile" ? "is-mobile" : ""}`}>
-        {demo?.type === "website" && <iframe className="demo-iframe" src={demo.url} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="fullscreen; clipboard-read; clipboard-write" />}
-        {demo?.type === "video" && directVideo && <video className="demo-video" src={demo.url} controls playsInline preload="metadata" />}
-        {demo?.type === "video" && !directVideo && videoEmbedUrl && <iframe className="demo-iframe" src={videoEmbedUrl} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />}
+        {demo?.type === "website" && <iframe className="demo-iframe" src={demo.url} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="fullscreen; clipboard-read; clipboard-write" onLoad={markPreviewLoaded} />}
+        {demo?.type === "video" && directVideo && <video className="demo-video" src={demo.url} controls playsInline preload="metadata" onLoadedData={markPreviewLoaded} onCanPlay={markPreviewLoaded} onError={markPreviewLoaded} />}
+        {demo?.type === "video" && !directVideo && videoEmbedUrl && <iframe className="demo-iframe" src={videoEmbedUrl} title={`${copy.name} ${t.demoMode}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen onLoad={markPreviewLoaded} />}
+        {previewLoading && <div className="demo-preview-loading" role="status" aria-live="polite"><span className="demo-preview-spinner" aria-hidden="true"/><span>{t.loadingPreview}</span></div>}
         {!demo || (demo.type === "video" && !directVideo && !videoEmbedUrl) ? <div className="dialog-preview">
           <div className="preview-icon"><icons.code size={25}/></div>
           <h3>{t.preview}</h3>
