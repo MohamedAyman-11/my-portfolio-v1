@@ -129,5 +129,6 @@
   "emailMissing": "Contact email not set yet",
   "footerRole": "Full-Stack Developer",
   "top": "Back to top",
-  "copyright": "Made with care."
+  "copyrightStart": "Made with",
+  "copyrightEnd": "in Egypt."
 }

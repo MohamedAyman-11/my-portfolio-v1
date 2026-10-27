@@ -38,18 +38,23 @@ export function Footer({
       <div className="footer-divider" />
       <div className="footer-bottom">
         <span>
-          © {new Date().getFullYear()} {site.name}
-          <i> ✳ </i>
-          {t.copyright}
+          © {new Date().getFullYear()} {t.copyrightStart}{" "}
+          <span className="footer-heart" aria-hidden="true">♥</span>{" "}
+          {t.copyrightEnd}
         </span>
         <p className="footer-credit" dir="ltr">
-          {'<Developed by="'}
+          <span className="footer-code-punct">&lt;</span>
+          <span className="footer-code-name">Developed</span>{" "}
+          <span className="footer-code-attribute">by</span>=
+          <span className="footer-code-string">&quot;</span>
           <a className="footer-credit-link" href={linkedInUrl} target="_blank" rel="noreferrer">
             Mohamed Ayman
           </a>
-          {'" andPowered=true />'}
+          <span className="footer-code-string">&quot;</span>{" "}
+          <span className="footer-code-attribute">andPowered</span>=
+          <span className="footer-code-value">true</span>{" "}
+          <span className="footer-code-punct">/&gt;</span>
         </p>
-        <span className="footer-location">{site.location[locale]}</span>
       </div>
     </footer>
   );
