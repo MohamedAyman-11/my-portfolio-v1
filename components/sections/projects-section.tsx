@@ -70,10 +70,21 @@ export function ProjectsSection({
                   <div className="project-info">
                     {copy.description && <p>{copy.description}</p>}
                     {project.technologies.length > 0 && (
-                      <div className="project-stack">
-                        {project.technologies.map((tag) => (
-                          <span key={tag}>{tag}</span>
-                        ))}
+                      <div className="project-stack" aria-label={`Technologies used: ${project.technologies.join(", ")}`}>
+                        <div className="project-stack-heading">
+                          <span className="project-stack-label">Tech stack</span>
+                          <span className="project-stack-count">{project.technologies.length} technologies</span>
+                        </div>
+                        <div className="project-stack-list">
+                          {project.technologies.slice(0, 5).map((tag) => (
+                            <span className="project-tech-chip" key={tag}>{tag}</span>
+                          ))}
+                          {project.technologies.length > 5 && (
+                            <span className="project-tech-chip project-tech-more" aria-hidden="true">
+                              +{project.technologies.length - 5}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     )}
                     <div className="project-actions">
