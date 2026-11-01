@@ -9,7 +9,12 @@ import { socialLinks } from "@/data/social-links";
 import { SocialIcon } from "@/components/icons/social-icons";
 import { Button } from "@/components/ui/button";
 import type { Locale } from "@/types/portfolio";
-import { reveal, type BaseProps } from "./motion";
+import {
+  REVEAL_EASE,
+  VIEWPORT_AMOUNT,
+  reveal,
+  type BaseProps,
+} from "./motion";
 
 export function ProjectsSection({
   t,
@@ -54,13 +59,13 @@ export function ProjectsSection({
                   {...(reducedMotion
                     ? {}
                     : {
-                        initial: { opacity: 0, y: 36, scale: 0.97 },
+                        initial: { opacity: 0, y: 28, scale: 0.98 },
                         whileInView: { opacity: 1, y: 0, scale: 1 },
-                        viewport: { once: true, amount: 0.3 },
+                        viewport: { once: true, amount: VIEWPORT_AMOUNT },
                         transition: {
-                          duration: 1.35,
-                          delay: index * 0.12,
-                          ease: [0.2, 0.7, 0.2, 1],
+                          duration: 1.1,
+                          delay: index * 0.1,
+                          ease: REVEAL_EASE,
                         },
                       })}
                 >

@@ -7,7 +7,12 @@ import { icons } from "@/config/icons";
 import { skills, skillCategories } from "@/data/skills";
 import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
-import { reveal, type BaseProps } from "./motion";
+import {
+  REVEAL_EASE,
+  VIEWPORT_AMOUNT,
+  reveal,
+  type BaseProps,
+} from "./motion";
 
 export function AboutSection({
   t,
@@ -35,8 +40,8 @@ export function AboutSection({
       opacity: 1,
       x: 0,
       transition: {
-        duration: reducedMotion ? 0.01 : 0.72,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: reducedMotion ? 0.01 : 1.02,
+        ease: REVEAL_EASE,
       },
     },
   };
@@ -54,8 +59,8 @@ export function AboutSection({
       opacity: 1,
       y: 0,
       transition: {
-        duration: reducedMotion ? 0.01 : 0.72,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: reducedMotion ? 0.01 : 1.02,
+        ease: REVEAL_EASE,
       },
     },
   };
@@ -78,7 +83,7 @@ export function AboutSection({
         </motion.div>
         <motion.div
           className="stats-row about-stats"
-          {...reveal(reducedMotion, 0, 0.3, 0.85)}
+          {...reveal(reducedMotion, 0, VIEWPORT_AMOUNT, 1.1)}
         >
           {t.stats.map((item, index) => {
             const StatIcon = StatIcons[index] ?? icons.code;
@@ -103,7 +108,7 @@ export function AboutSection({
           variants={gridVariants}
           initial={reducedMotion ? false : "hidden"}
           whileInView="visible"
-          viewport={{ once: true, amount: 0.12 }}
+          viewport={{ once: true, amount: VIEWPORT_AMOUNT }}
         >
           <motion.article
             className="about-copy card-surface"

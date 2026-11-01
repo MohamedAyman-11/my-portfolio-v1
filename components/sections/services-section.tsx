@@ -6,7 +6,7 @@ import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { services } from "@/data/services";
 import { Button } from "@/components/ui/button";
-import { reveal, type BaseProps } from "./motion";
+import { reveal, VIEWPORT_AMOUNT, type BaseProps } from "./motion";
 
 export function ServicesSection({
   t,
@@ -39,7 +39,7 @@ export function ServicesSection({
               <motion.article
                 className="service-card card-surface"
                 key={service.id}
-                {...reveal(reducedMotion, (index % 3) * 0.08, 0.3, 0.85)}
+                {...reveal(reducedMotion, (index % 3) * 0.08, VIEWPORT_AMOUNT, 1.1)}
               >
                 <div className="service-top">
                   <span className={`service-icon service-icon-${index + 1}`}>

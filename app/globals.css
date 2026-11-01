@@ -1560,10 +1560,6 @@ html[data-theme="light"] .orbit-c {
   box-shadow: 0 16px 36px rgba(0, 0, 0, .14);
 }
 
-.about-copy:hover {
-  scale: 1;
-}
-
 .stat-card {
   transition: translate .52s cubic-bezier(.2, .8, .2, 1), scale .52s cubic-bezier(.2, .8, .2, 1), box-shadow .52s ease, border-color .4s ease;
 }

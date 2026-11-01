@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
-import { reveal, type BaseProps } from "./motion";
+import { reveal, VIEWPORT_AMOUNT, type BaseProps } from "./motion";
 
 export function JourneySection({ t, reducedMotion }: BaseProps) {
   const journeyIcons = [
@@ -39,7 +39,7 @@ export function JourneySection({ t, reducedMotion }: BaseProps) {
                 </div>
                 <motion.div
                   className="journey-card card-surface"
-                  {...reveal(reducedMotion, (index % 2) * 0.08, 0.15, 0.85)}
+                  {...reveal(reducedMotion, (index % 2) * 0.08, VIEWPORT_AMOUNT, 1.1)}
                 >
                   <div className="journey-meta">
                     <span className={`journey-period journey-period-${index + 1}`}>{step.year}</span>

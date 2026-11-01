@@ -7,7 +7,13 @@ import { site } from "@/config/site";
 import { socialLinks } from "@/data/social-links";
 import type { Locale } from "@/types/portfolio";
 import { SocialIcon } from "@/components/icons/social-icons";
-import { reveal, revealFromSide, type BaseProps } from "./motion";
+import {
+  REVEAL_EASE,
+  VIEWPORT_AMOUNT,
+  reveal,
+  revealFromSide,
+  type BaseProps,
+} from "./motion";
 
 export function ContactSection({
   t,
@@ -48,10 +54,10 @@ export function ContactSection({
                 : {
                     initial: { opacity: 0, x: -48, rotateY: -8 },
                     whileInView: { opacity: 1, x: 0, rotateY: 0 },
-                    viewport: { once: true, amount: 0.3 },
+                    viewport: { once: true, amount: VIEWPORT_AMOUNT },
                     transition: {
-                      duration: 0.9,
-                      ease: [0.22, 1, 0.36, 1],
+                      duration: 1.1,
+                      ease: REVEAL_EASE,
                     },
                   })}
             >
@@ -82,11 +88,11 @@ export function ContactSection({
                 : {
                     initial: { opacity: 0, y: 34, scale: 0.92 },
                     whileInView: { opacity: 1, y: 0, scale: 1 },
-                    viewport: { once: true, amount: 0.3 },
+                    viewport: { once: true, amount: VIEWPORT_AMOUNT },
                     transition: {
-                      duration: 0.8,
-                      delay: 0.1,
-                      ease: [0.22, 1, 0.36, 1],
+                      duration: 1.1,
+                      delay: 0.08,
+                      ease: REVEAL_EASE,
                     },
                   })}
             >
@@ -126,11 +132,11 @@ export function ContactSection({
                 : {
                     initial: { opacity: 0, x: -28, y: 18, scale: 0.96 },
                     whileInView: { opacity: 1, x: 0, y: 0, scale: 1 },
-                    viewport: { once: true, amount: 0.3 },
+                    viewport: { once: true, amount: VIEWPORT_AMOUNT },
                     transition: {
-                      duration: 0.8,
+                      duration: 1.1,
                       delay: 0.16,
-                      ease: [0.16, 1, 0.3, 1],
+                      ease: REVEAL_EASE,
                     },
                   })}
             >
@@ -156,7 +162,7 @@ export function ContactSection({
             className="contact-form"
             onSubmit={onSubmit}
             noValidate
-            {...revealFromSide(reducedMotion, "right", 0, 0.1, 0.95)}
+            {...revealFromSide(reducedMotion, "right", 0, VIEWPORT_AMOUNT, 1.1)}
           >
             <h3>{t.sendMessageTitle}</h3>
             <div className="form-row">
