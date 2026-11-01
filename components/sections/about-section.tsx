@@ -7,7 +7,7 @@ import { icons } from "@/config/icons";
 import { skills, skillCategories } from "@/data/skills";
 import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
-import { reveal, revealFromSide, type BaseProps } from "./motion";
+import { reveal, type BaseProps } from "./motion";
 
 export function AboutSection({
   t,
@@ -20,6 +20,45 @@ export function AboutSection({
     icons.cpu,
     icons.graduationCap,
   ];
+  const gridVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: reducedMotion ? 0 : 0.08,
+        staggerChildren: reducedMotion ? 0 : 0.14,
+      },
+    },
+  };
+  const copyVariants = {
+    hidden: reducedMotion ? {} : { opacity: 0, x: -28 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: reducedMotion ? 0.01 : 0.72,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
+  const skillsContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.12,
+      },
+    },
+  };
+  const skillCardVariants = {
+    hidden: reducedMotion ? {} : { opacity: 0, y: 22 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reducedMotion ? 0.01 : 0.72,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
 
   return (
     <section className="section about-section section-anchor" id="about">
@@ -59,10 +98,16 @@ export function AboutSection({
             );
           })}
         </motion.div>
-        <div className="about-grid">
+        <motion.div
+          className="about-grid"
+          variants={gridVariants}
+          initial={reducedMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.12 }}
+        >
           <motion.article
             className="about-copy card-surface"
-            {...revealFromSide(reducedMotion, "left", 0, 0.3, 0.95)}
+            variants={copyVariants}
           >
             <div className="about-story-title">
               <span>
@@ -74,28 +119,15 @@ export function AboutSection({
               <p key={paragraph}>{paragraph}</p>
             ))}
           </motion.article>
-          <div className="about-right">
+          <motion.div
+            className="about-right"
+            variants={skillsContainerVariants}
+          >
             {skillCategories.map((category, index) => (
               <motion.section
                 className={`skills-card card-surface skill-group skill-group-${index + 1}`}
                 key={category}
-                initial={
-                  reducedMotion
-                    ? false
-                    : {
-                        opacity: 0,
-                        y: index === 0 ? 24 : index === 2 ? -18 : 0,
-                        x: index === 1 ? 24 : 0,
-                        scale: index === 2 ? 0.96 : 1,
-                      }
-                }
-                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: reducedMotion ? 0.01 : 0.85,
-                  delay: reducedMotion ? 0 : index * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+                variants={skillCardVariants}
               >
                 <h3>
                   <span className="skill-group-dot" />
@@ -123,8 +155,8 @@ export function AboutSection({
                 </div>
               </motion.section>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
