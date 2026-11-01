@@ -1871,7 +1871,7 @@ html[data-theme="light"] .skill-group-2 .skill-group-dot {
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
   gap: 25px;
   margin-top: 45px;
 }
@@ -3593,6 +3593,10 @@ input[type="email"] {
 }
 
 @media (max-width: 992px) {
+  .contact-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .topbar-wrap {
     padding-inline: clamp(14px, 2.6vw, 26px);
   }
@@ -3819,6 +3823,12 @@ input[type="email"] {
     min-height: 235px;
   }
 
+  .service-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 32px;
+  }
+
   .project-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -4021,7 +4031,23 @@ input[type="email"] {
   }
 
   .service-card {
-    min-height: 210px;
+    min-height: 0;
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .service-card h3 {
+    margin-top: 18px;
+    font-size: clamp(20px, 5.2vw, 23px);
+  }
+
+  .service-tags {
+    gap: 7px;
+    padding-top: 16px;
+  }
+
+  .service-tags span {
+    padding-inline: 9px;
   }
 
   .project-art {
