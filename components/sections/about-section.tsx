@@ -49,7 +49,10 @@ export function AboutSection({
                   <StatIcon size={23} strokeWidth={1.8} aria-hidden="true" />
                 </span>
                 <strong>
-                  <AnimatedStat value={item.value} reducedMotion={reducedMotion} />
+                  <AnimatedStat
+                    value={item.value}
+                    reducedMotion={reducedMotion}
+                  />
                 </strong>
                 <span>{item.label}</span>
               </div>
@@ -76,12 +79,16 @@ export function AboutSection({
               <motion.section
                 className={`skills-card card-surface skill-group skill-group-${index + 1}`}
                 key={category}
-                initial={reducedMotion ? false : {
-                  opacity: 0,
-                  y: index === 0 ? 24 : index === 2 ? -18 : 0,
-                  x: index === 1 ? 24 : 0,
-                  scale: index === 2 ? 0.96 : 1,
-                }}
+                initial={
+                  reducedMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        y: index === 0 ? 24 : index === 2 ? -18 : 0,
+                        x: index === 1 ? 24 : 0,
+                        scale: index === 2 ? 0.96 : 1,
+                      }
+                }
                 whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.18 }}
                 transition={{
@@ -162,7 +169,7 @@ function CountedStat({
     ref,
     start: 0,
     end: target,
-    duration: reducedMotion ? 0 : 2,
+    duration: reducedMotion ? 0 : 3,
     prefix,
     suffix,
     enableScrollSpy: !reducedMotion,
