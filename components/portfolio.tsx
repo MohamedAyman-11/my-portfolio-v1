@@ -49,6 +49,7 @@ export default function Portfolio({
   const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(
     null,
   );
+  const [previewOpen, setPreviewOpen] = useState(false);
   const progressRef = useRef<HTMLSpanElement>(null);
   const reducedMotion = useReducedMotion();
   const rtl = locale === "ar";
@@ -159,7 +160,12 @@ export default function Portfolio({
       }),
     );
   };
-  const closePreview = useCallback(() => setSelectedProject(null), []);
+  const openPreview = (project: ProjectRecord) => {
+    setSelectedProject(project);
+    setPreviewOpen(true);
+  };
+  const closePreview = useCallback(() => setPreviewOpen(false), []);
+  const clearPreview = useCallback(() => setSelectedProject(null), []);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -270,7 +276,7 @@ export default function Portfolio({
           t={t}
           reducedMotion={Boolean(reducedMotion)}
           locale={locale}
-          onPreview={setSelectedProject}
+          onPreview={openPreview}
         />
         <JourneySection t={t} reducedMotion={Boolean(reducedMotion)} />
         <ContactSection
@@ -281,14 +287,14 @@ export default function Portfolio({
           onSubmit={onSubmit}
         />
         <Footer t={t} locale={locale} onTop={() => scrollTo("home")} />
-        {selectedProject && (
-          <ProjectPreviewDialog
-            project={selectedProject}
-            t={t}
-            locale={locale}
-            onClose={closePreview}
-          />
-        )}
+        <ProjectPreviewDialog
+          project={selectedProject}
+          open={previewOpen}
+          t={t}
+          locale={locale}
+          onClose={closePreview}
+          onExitComplete={clearPreview}
+        />
       </main>
     </>
   );

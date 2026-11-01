@@ -7,7 +7,7 @@ import { site } from "@/config/site";
 import { socialLinks } from "@/data/social-links";
 import type { Locale } from "@/types/portfolio";
 import { SocialIcon } from "@/components/icons/social-icons";
-import { reveal, type BaseProps } from "./motion";
+import { reveal, revealFromSide, type BaseProps } from "./motion";
 
 export function ContactSection({
   t,
@@ -39,9 +39,22 @@ export function ContactSection({
           </h2>
           <p>{t.contactBody}</p>
         </motion.div>
-        <motion.div className="contact-panel" {...reveal(reducedMotion)}>
+        <div className="contact-panel">
           <div className="contact-sidebar">
-            <article className="contact-copy card-surface">
+            <motion.article
+              className="contact-copy card-surface"
+              {...(reducedMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, x: -48, rotateY: -8 },
+                    whileInView: { opacity: 1, x: 0, rotateY: 0 },
+                    viewport: { once: true, amount: 0.3 },
+                    transition: {
+                      duration: 0.9,
+                      ease: [0.22, 1, 0.36, 1],
+                    },
+                  })}
+            >
               <div className="contact-card-heading">
                 <span className="contact-card-icon">
                   <icons.sparkles size={20} />
@@ -61,8 +74,22 @@ export function ContactSection({
               <div className="contact-decoration" aria-hidden="true">
                 ✳
               </div>
-            </article>
-            <section className="contact-connect card-surface">
+            </motion.article>
+            <motion.section
+              className="contact-connect card-surface"
+              {...(reducedMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 34, scale: 0.92 },
+                    whileInView: { opacity: 1, y: 0, scale: 1 },
+                    viewport: { once: true, amount: 0.3 },
+                    transition: {
+                      duration: 0.8,
+                      delay: 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    },
+                  })}
+            >
               <h3>{t.connectTitle}</h3>
               <div className="contact-socials">
                 {socialLinks.map((social) => (
@@ -91,8 +118,22 @@ export function ContactSection({
                   <icons.mail size={22} />
                 </a>
               </div>
-            </section>
-            <article className="contact-email-card card-surface">
+            </motion.section>
+            <motion.article
+              className="contact-email-card card-surface"
+              {...(reducedMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, x: -28, y: 18, scale: 0.96 },
+                    whileInView: { opacity: 1, x: 0, y: 0, scale: 1 },
+                    viewport: { once: true, amount: 0.3 },
+                    transition: {
+                      duration: 0.8,
+                      delay: 0.16,
+                      ease: [0.16, 1, 0.3, 1],
+                    },
+                  })}
+            >
               <span className="contact-card-icon">
                 <icons.mail size={20} />
               </span>
@@ -109,9 +150,14 @@ export function ContactSection({
                   <span className="email-placeholder">{t.emailMissing}</span>
                 )}
               </div>
-            </article>
+            </motion.article>
           </div>
-          <form className="contact-form" onSubmit={onSubmit} noValidate>
+          <motion.form
+            className="contact-form"
+            onSubmit={onSubmit}
+            noValidate
+            {...revealFromSide(reducedMotion, "right", 0, 0.1, 0.95)}
+          >
             <h3>{t.sendMessageTitle}</h3>
             <div className="form-row">
               <label>
@@ -161,8 +207,8 @@ export function ContactSection({
             >
               {formStatus || (site.email ? t.formHint : t.formMissing)}
             </p>
-          </form>
-        </motion.div>
+          </motion.form>
+        </div>
       </div>
     </section>
   );

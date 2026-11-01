@@ -39,7 +39,7 @@ export function AboutSection({
         </motion.div>
         <motion.div
           className="stats-row about-stats"
-          {...reveal(reducedMotion)}
+          {...reveal(reducedMotion, 0, 0.3, 0.85)}
         >
           {t.stats.map((item, index) => {
             const StatIcon = StatIcons[index] ?? icons.code;
@@ -62,7 +62,7 @@ export function AboutSection({
         <div className="about-grid">
           <motion.article
             className="about-copy card-surface"
-            {...revealFromSide(reducedMotion, "left")}
+            {...revealFromSide(reducedMotion, "left", 0, 0.3, 0.95)}
           >
             <div className="about-story-title">
               <span>
@@ -90,9 +90,9 @@ export function AboutSection({
                       }
                 }
                 whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.18 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{
-                  duration: reducedMotion ? 0.01 : 0.7,
+                  duration: reducedMotion ? 0.01 : 0.85,
                   delay: reducedMotion ? 0 : index * 0.12,
                   ease: [0.22, 1, 0.36, 1],
                 }}

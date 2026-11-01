@@ -48,11 +48,13 @@ function isDirectVideo(url: string) {
   }
 }
 
-export function ProjectPreviewDialog({ project, t, locale, onClose }: {
+export function ProjectPreviewDialog({ project, open, t, locale, onClose, onExitComplete }: {
   project: ProjectRecord | null;
+  open: boolean;
   t: Messages;
   locale: Locale;
   onClose: () => void;
+  onExitComplete: () => void;
 }) {
   const closeButton = useRef<HTMLButtonElement>(null);
   const [previewSelection, setPreviewSelection] = useState<{ projectId: string; size: PreviewSize } | null>(null);
@@ -76,12 +78,20 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
   };
 
   return (
-    <Dialog open={Boolean(project && copy)} onOpenChange={(open) => { if (!open) onClose(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => { if (!open) onClose(); }}
+    >
       {project && copy && <DialogContent
         className="project-dialog"
         overlayClassName="dialog-backdrop"
         aria-labelledby="dialog-title"
         onOpenAutoFocus={(event) => { event.preventDefault(); closeButton.current?.focus(); }}
+        onAnimationEnd={(event) => {
+          if (event.target === event.currentTarget && event.animationName === "shadcn-dialog-out") {
+            onExitComplete();
+          }
+        }}
       >
       <div className="demo-header">
         <div className="demo-project-heading">

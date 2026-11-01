@@ -14,8 +14,8 @@
   "photoAlt": "صورة محمد أيمن الشخصية",
   "heroOrbitLabel": "FULL STACK DEVELOPER · FULL STACK DEVELOPER · FULL STACK DEVELOPER · FULL STACK DEVELOPER ·",
   "metadata": {
-    "title": "محمد أيمن — مطوّر متكامل",
-    "description": "أعمال محمد أيمن، مطوّر متكامل يبني تجارب رقمية مدروسة."
+    "title": "محمد أيمن — Full-Stack Developer",
+    "description": "أعمال محمد أيمن، Full-Stack Developer يبني تجارب رقمية مدروسة."
   },
   "hire": "لنتعاون",
   "menu": "فتح قائمة التنقل",
@@ -36,7 +36,7 @@
   "aboutTitleAccent": "عني",
   "storyTitle": "قصتي",
   "aboutParagraphs": [
-    "أنا محمد أيمن، مطوّر Full-Stack وطالب علوم حاسب، أعمل على بناء تطبيقات ويب متينة وقابلة للتوسع. أتنقل بين جانبي التطوير؛ فأصمم واجهات متجاوبة باستخدام React وNext.js، وأبني أنظمة خلفية آمنة وفعّالة باستخدام Node.js وExpress.js.",
+    "أنا محمد أيمن، Full-Stack Developer وطالب علوم حاسب، أعمل على بناء تطبيقات ويب متينة وقابلة للتوسع. أتنقل بين Front-end وBack-end؛ فأصمم واجهات متجاوبة باستخدام React وNext.js، وأبني أنظمة Back-end آمنة وفعّالة باستخدام Node.js وExpress.js.",
     "أهتم بالهندسة وحل المشكلات والقرارات التي تصنع منتجات مميزة. هدفي تحويل الأفكار المعقدة إلى تجارب عملية ومتقنة، تستند إلى بنية موثوقة وتوازن بين الوظائف والأداء وقابلية التطور مستقبلًا."
   ],
   "stats": [
@@ -72,6 +72,7 @@
   "projectsTitleLead": "مشاريع",
   "projectsTitleAccent": "مختارة",
   "projectsIntro": "استعرض مشاريع نُفذت بهدف واضح، تجمع بين التصميم المدروس والهندسة المتينة وحل المشكلات الواقعية.",
+  "projectsCtaButton": "شاهد المزيد من المشاريع",
   "projectAction": "عرض المشروع",
   "repos": "مستودعات",
   "repositoriesLabel": "مستودعات المشروع",
@@ -92,7 +93,7 @@
   "journeySteps": [
     {
       "year": "2026",
-      "title": "أول مشروع متكامل: Booking",
+      "title": "أول مشروع Full-Stack: Booking",
       "body": "بنيت أول مشروع Full-stack لي: منصة لحجز أماكن الإقامة، تشمل إدارة العقارات والحجوزات وتجارب مختلفة للضيوف والمضيفين.",
       "tags": ["React", "Node.js", "MongoDB", "Stripe"]
     },
@@ -127,7 +128,7 @@
   "formMissing": "أضف بريد التواصل لتفعيل النموذج.",
   "formError": "يرجى إكمال جميع الحقول وإدخال بريد إلكتروني صحيح.",
   "emailMissing": "لم تتم إضافة بريد التواصل بعد",
-  "footerRole": "مطوّر متكامل",
+  "footerRole": "Full-Stack Developer",
   "top": "العودة للأعلى",
   "copyrightStart": "صُنع بحب",
   "copyrightEnd": "في مصر."

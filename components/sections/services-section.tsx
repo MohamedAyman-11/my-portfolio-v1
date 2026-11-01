@@ -39,7 +39,7 @@ export function ServicesSection({
               <motion.article
                 className="service-card card-surface"
                 key={service.id}
-                {...reveal(reducedMotion, (index % 3) * 0.08)}
+                {...reveal(reducedMotion, (index % 3) * 0.08, 0.3, 0.85)}
               >
                 <div className="service-top">
                   <span className={`service-icon service-icon-${index + 1}`}>

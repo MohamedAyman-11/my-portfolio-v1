@@ -33,12 +33,14 @@ export function JourneySection({ t, reducedMotion }: BaseProps) {
               <motion.article
                 className="journey-step"
                 key={step.title}
-                {...reveal(reducedMotion, (index % 2) * 0.08)}
               >
                 <div className="journey-marker">
                   <JourneyIcon size={21} />
                 </div>
-                <div className="journey-card card-surface">
+                <motion.div
+                  className="journey-card card-surface"
+                  {...reveal(reducedMotion, (index % 2) * 0.08, 0.15, 0.85)}
+                >
                   <div className="journey-meta">
                     <span className={`journey-period journey-period-${index + 1}`}>{step.year}</span>
                     <span className="journey-count">{step.year}</span>
@@ -48,7 +50,7 @@ export function JourneySection({ t, reducedMotion }: BaseProps) {
                   <div className="journey-tags">
                     {step.tags.map((tag) => <span className="journey-tag" key={tag}>{tag}</span>)}
                   </div>
-                </div>
+                </motion.div>
               </motion.article>
             );
           })}

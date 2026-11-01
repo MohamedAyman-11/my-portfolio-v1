@@ -5,7 +5,9 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "@/config/icons";
 import { projects } from "@/data/projects";
+import { socialLinks } from "@/data/social-links";
 import { SocialIcon } from "@/components/icons/social-icons";
+import { Button } from "@/components/ui/button";
 import type { Locale } from "@/types/portfolio";
 import { reveal, type BaseProps } from "./motion";
 
@@ -54,9 +56,9 @@ export function ProjectsSection({
                     : {
                         initial: { opacity: 0, y: 36, scale: 0.97 },
                         whileInView: { opacity: 1, y: 0, scale: 1 },
-                        viewport: { once: true, amount: 0.18 },
+                        viewport: { once: true, amount: 0.3 },
                         transition: {
-                          duration: 1.2,
+                          duration: 1.35,
                           delay: index * 0.12,
                           ease: [0.2, 0.7, 0.2, 1],
                         },
@@ -191,6 +193,22 @@ export function ProjectsSection({
                 </motion.article>
               );
             })}
+        </div>
+        <div className="projects-cta">
+          <Button
+            variant="ghost"
+            className="button button-primary"
+            asChild
+          >
+            <a
+              href={socialLinks.find((social) => social.id === "github")!.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t.projectsCtaButton}
+              <icons.arrowUpRight size={19} />
+            </a>
+          </Button>
         </div>
       </div>
     </section>

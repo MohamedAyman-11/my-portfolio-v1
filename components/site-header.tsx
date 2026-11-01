@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
 import { site } from "@/config/site";
 import { navigation } from "@/data/navigation";
@@ -99,19 +99,9 @@ export function SiteHeader({
           </Button>
           <SheetTrigger asChild>
             <button className="icon-button mobile-menu-button" aria-label={mobileOpen ? t.closeMenu : t.menu}>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  className="mobile-menu-toggle-icon"
-                  key={mobileOpen ? "close" : "menu"}
-                  aria-hidden="true"
-                  initial={{ opacity: 0, rotate: -45 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 45 }}
-                  transition={{ duration: 0.18, ease: "easeOut" }}
-                >
-                  {mobileOpen ? <icons.close size={20} /> : <icons.menu size={20} />}
-                </motion.span>
-              </AnimatePresence>
+              <span className="mobile-menu-toggle-icon" aria-hidden="true">
+                {mobileOpen ? <icons.close size={20} /> : <icons.menu size={20} />}
+              </span>
             </button>
           </SheetTrigger>
         </div>
