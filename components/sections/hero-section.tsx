@@ -1,14 +1,11 @@
 "use client";
-
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
 import { site } from "@/config/site";
-import { heroBadges } from "@/data/hero-badges";
 import { socialLinks } from "@/data/social-links";
 import type { Locale, Theme } from "@/types/portfolio";
-import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { SocialLink } from "@/components/social-link";
 import { Button } from "@/components/ui/button";
 import { type BaseProps } from "./motion";
@@ -74,8 +71,15 @@ export function HeroSection({
             frame?.style.setProperty("--tilt-z", "0deg");
           }}
           initial={reducedMotion ? false : { opacity: 0, scale: 0.94, y: 18 }}
-          animate={headingComplete ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.94, y: 18 }}
-          transition={{ duration: reducedMotion ? 0.01 : 0.68, ease: [0.16, 1, 0.3, 1] }}
+          animate={
+            headingComplete
+              ? { opacity: 1, scale: 1, y: 0 }
+              : { opacity: 0, scale: 0.94, y: 18 }
+          }
+          transition={{
+            duration: reducedMotion ? 0.01 : 0.68,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
           <div className="portrait-orbit orbit-a" />
           <div className="portrait-orbit orbit-b" />
@@ -115,29 +119,6 @@ export function HeroSection({
               </div>
             )}
           </div>
-          <div className="badge-orbit" aria-hidden="true">
-            {heroBadges.map((badge, index) => (
-              <motion.div
-                className={`float-tag tag-${badge.position}`}
-                key={badge.name}
-                initial={reducedMotion ? false : { opacity: 0, scale: 0.92 }}
-                animate={headingComplete ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
-                transition={{
-                  duration: reducedMotion ? 0.01 : 0.38,
-                  delay: reducedMotion ? 0 : 0.12 + index * 0.1,
-                }}
-              >
-                <span className="tag-mark">
-                  <TechnologyIcon
-                    id={badge.icon}
-                    theme={theme}
-                    className="technology-icon"
-                  />
-                </span>
-                {badge.name}
-              </motion.div>
-            ))}
-          </div>
           {site.availabilityEnabled && (
             <div className="availability">
               <span className="status-dot" />
@@ -163,7 +144,10 @@ export function HeroSection({
             <span className="eyebrow-line" />
             {t.heroEyebrow}
           </motion.div>
-          <motion.h1 variants={headingReveal} aria-label={`${t.heroLead} ${t.heroAccent}`}>
+          <motion.h1
+            variants={headingReveal}
+            aria-label={`${t.heroLead} ${t.heroAccent}`}
+          >
             <TypewriterHeading
               lead={t.heroLead}
               accent={t.heroAccent}
@@ -207,9 +191,14 @@ export function HeroSection({
           <motion.div className="hero-socials" variants={socialsReveal}>
             <span>{t.followMe}</span>
             <i />
-            {socialLinks.filter((social) => social.id !== "facebook" && social.id !== "whatsapp").map((social) => (
-              <SocialLink key={social.id} social={social} />
-            ))}
+            {socialLinks
+              .filter(
+                (social) =>
+                  social.id !== "facebook" && social.id !== "whatsapp",
+              )
+              .map((social) => (
+                <SocialLink key={social.id} social={social} />
+              ))}
           </motion.div>
         </motion.div>
       </div>
@@ -233,7 +222,9 @@ function TypewriterHeading({
   onComplete: () => void;
 }) {
   const full = `${lead} ${accent}`;
-  const [visibleCount, setVisibleCount] = useState(reducedMotion ? full.length : 0);
+  const [visibleCount, setVisibleCount] = useState(
+    reducedMotion ? full.length : 0,
+  );
 
   useEffect(() => {
     if (reducedMotion) {
@@ -255,9 +246,8 @@ function TypewriterHeading({
   }, [full, reducedMotion, onComplete]);
 
   const visibleLead = full.slice(0, Math.min(visibleCount, lead.length));
-  const visibleAccent = visibleCount > lead.length
-    ? full.slice(lead.length + 1, visibleCount)
-    : "";
+  const visibleAccent =
+    visibleCount > lead.length ? full.slice(lead.length + 1, visibleCount) : "";
 
   return (
     <>
