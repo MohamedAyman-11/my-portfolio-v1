@@ -14,8 +14,13 @@ export function ProjectsSection({
   reducedMotion,
   locale,
   onPreview,
-}: BaseProps & { locale: Locale; onPreview: (project: (typeof projects)[number]) => void }) {
-  const [expandedRepositories, setExpandedRepositories] = useState<string | null>(null);
+}: BaseProps & {
+  locale: Locale;
+  onPreview: (project: (typeof projects)[number]) => void;
+}) {
+  const [expandedRepositories, setExpandedRepositories] = useState<
+    string | null
+  >(null);
 
   return (
     <section className="section projects-section section-anchor" id="projects">
@@ -51,17 +56,27 @@ export function ProjectsSection({
                         whileInView: { opacity: 1, y: 0, scale: 1 },
                         viewport: { once: true, amount: 0.18 },
                         transition: {
-                          duration: 1.05,
+                          duration: 1.2,
                           delay: index * 0.12,
                           ease: [0.2, 0.7, 0.2, 1],
                         },
                       })}
                 >
                   <div className={`project-art art-${index + 1}`}>
-                    <span className={`project-art-icon ${project.image ? "has-image" : ""}`} aria-hidden="true">
-                      {project.image
-                        ? <Image src={project.image} alt="" width={68} height={68} />
-                        : ["✦", "◇", "⌘"][index % 3]}
+                    <span
+                      className={`project-art-icon ${project.image ? "has-image" : ""}`}
+                      aria-hidden="true"
+                    >
+                      {project.image ? (
+                        <Image
+                          src={project.image}
+                          alt=""
+                          width={68}
+                          height={68}
+                        />
+                      ) : (
+                        ["✦", "◇", "⌘"][index % 3]
+                      )}
                     </span>
                     <h3 className="project-art-title">{copy.name}</h3>
                     <span className="project-art-index">{copy.type}</span>
@@ -70,17 +85,29 @@ export function ProjectsSection({
                   <div className="project-info">
                     {copy.description && <p>{copy.description}</p>}
                     {project.technologies.length > 0 && (
-                      <div className="project-stack" aria-label={`Technologies used: ${project.technologies.join(", ")}`}>
+                      <div
+                        className="project-stack"
+                        aria-label={`Technologies used: ${project.technologies.join(", ")}`}
+                      >
                         <div className="project-stack-heading">
-                          <span className="project-stack-label">Tech stack</span>
-                          <span className="project-stack-count">{project.technologies.length} technologies</span>
+                          <span className="project-stack-label">
+                            Tech stack
+                          </span>
+                          <span className="project-stack-count">
+                            +{project.technologies.length} technologies
+                          </span>
                         </div>
                         <div className="project-stack-list">
                           {project.technologies.slice(0, 5).map((tag) => (
-                            <span className="project-tech-chip" key={tag}>{tag}</span>
+                            <span className="project-tech-chip" key={tag}>
+                              {tag}
+                            </span>
                           ))}
                           {project.technologies.length > 5 && (
-                            <span className="project-tech-chip project-tech-more" aria-hidden="true">
+                            <span
+                              className="project-tech-chip project-tech-more"
+                              aria-hidden="true"
+                            >
                               +{project.technologies.length - 5}
                             </span>
                           )}
@@ -99,7 +126,11 @@ export function ProjectsSection({
                         <button
                           type="button"
                           className="project-action project-repo"
-                          onClick={() => setExpandedRepositories((current) => current === project.id ? null : project.id)}
+                          onClick={() =>
+                            setExpandedRepositories((current) =>
+                              current === project.id ? null : project.id,
+                            )
+                          }
                           aria-expanded={expandedRepositories === project.id}
                           aria-controls={`repositories-${project.id}`}
                         >
@@ -112,40 +143,49 @@ export function ProjectsSection({
                       )}
                     </div>
                     <AnimatePresence initial={false}>
-                      {repositories.length > 0 && expandedRepositories === project.id && (
-                        <motion.div
-                          id={`repositories-${project.id}`}
-                          className="project-repositories"
-                          aria-label={t.repositoriesLabel}
-                          initial={{ height: 0, opacity: 0, y: -8 }}
-                          animate={{ height: "auto", opacity: 1, y: 0 }}
-                          exit={{ height: 0, opacity: 0, y: -8 }}
-                          transition={{
-                            height: { duration: reducedMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] },
-                            opacity: { duration: reducedMotion ? 0 : 0.2 },
-                            y: { duration: reducedMotion ? 0 : 0.24, ease: "easeOut" },
-                          }}
-                          style={{ overflow: "hidden" }}
-                        >
-                          {repositories.map((repository, repositoryIndex) => (
-                            <motion.a
-                              key={repository.url}
-                              href={repository.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              initial={{ opacity: 0, x: -8 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                duration: reducedMotion ? 0 : 0.2,
-                                delay: reducedMotion ? 0 : repositoryIndex * 0.06,
-                              }}
-                            >
-                              <span>{repository.name}</span>
-                              <icons.externalLink size={16} />
-                            </motion.a>
-                          ))}
-                        </motion.div>
-                      )}
+                      {repositories.length > 0 &&
+                        expandedRepositories === project.id && (
+                          <motion.div
+                            id={`repositories-${project.id}`}
+                            className="project-repositories"
+                            aria-label={t.repositoriesLabel}
+                            initial={{ height: 0, opacity: 0, y: -8 }}
+                            animate={{ height: "auto", opacity: 1, y: 0 }}
+                            exit={{ height: 0, opacity: 0, y: -8 }}
+                            transition={{
+                              height: {
+                                duration: reducedMotion ? 0 : 0.32,
+                                ease: [0.22, 1, 0.36, 1],
+                              },
+                              opacity: { duration: reducedMotion ? 0 : 0.2 },
+                              y: {
+                                duration: reducedMotion ? 0 : 0.24,
+                                ease: "easeOut",
+                              },
+                            }}
+                            style={{ overflow: "hidden" }}
+                          >
+                            {repositories.map((repository, repositoryIndex) => (
+                              <motion.a
+                                key={repository.url}
+                                href={repository.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                initial={{ opacity: 0, x: -8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{
+                                  duration: reducedMotion ? 0 : 0.2,
+                                  delay: reducedMotion
+                                    ? 0
+                                    : repositoryIndex * 0.06,
+                                }}
+                              >
+                                <span>{repository.name}</span>
+                                <icons.externalLink size={16} />
+                              </motion.a>
+                            ))}
+                          </motion.div>
+                        )}
                     </AnimatePresence>
                   </div>
                 </motion.article>
