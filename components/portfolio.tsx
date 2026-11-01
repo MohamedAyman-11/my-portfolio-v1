@@ -81,18 +81,6 @@ export default function Portfolio({
   }, [locale, rtl]);
 
   useEffect(() => {
-    if (!mobileOpen) return;
-    const htmlOverflow = document.documentElement.style.overflow;
-    const bodyOverflow = document.body.style.overflow;
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = htmlOverflow;
-      document.body.style.overflow = bodyOverflow;
-    };
-  }, [mobileOpen]);
-
-  useEffect(() => {
     let frame = 0;
     const updateActiveSection = () => {
       if (frame) return;

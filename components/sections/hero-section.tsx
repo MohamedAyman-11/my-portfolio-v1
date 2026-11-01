@@ -10,6 +10,7 @@ import { socialLinks } from "@/data/social-links";
 import type { Locale, Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { SocialLink } from "@/components/social-link";
+import { Button } from "@/components/ui/button";
 import { type BaseProps } from "./motion";
 
 export function HeroSection({
@@ -179,13 +180,15 @@ export function HeroSection({
             {t.heroBody}
           </motion.p>
           <motion.div className="hero-actions" variants={actionsReveal}>
-            <button
+            <Button
+              type="button"
+              variant="ghost"
               className="button button-primary"
               onClick={() => onScroll("projects")}
             >
               {t.work}
               <Arrow size={16} />
-            </button>
+            </Button>
             {site.cvUrl ? (
               <a className="button button-secondary" href={site.cvUrl} download>
                 {t.download}

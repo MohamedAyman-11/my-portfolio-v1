@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
+import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
 import { socialLinks } from "@/data/social-links";
 import type { Locale } from "@/types/portfolio";
@@ -150,10 +151,10 @@ export function ContactSection({
                 placeholder={t.messagePlaceholder}
               />
             </label>
-            <button className="button button-primary send-button" type="submit">
+            <Button variant="ghost" className="button button-primary send-button" type="submit">
               {t.send}
               <Arrow size={16} />
-            </button>
+            </Button>
             <p
               className={`form-feedback ${formStatus === t.formError ? "error" : ""}`}
               aria-live="polite"

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { icons } from "@/config/icons";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Messages } from "@/lib/i18n";
 import type { ProjectRecord } from "@/types/portfolio";
 import type { Locale } from "@/types/portfolio";
@@ -55,40 +55,12 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
   onClose: () => void;
 }) {
   const closeButton = useRef<HTMLButtonElement>(null);
-  const returnFocus = useRef<HTMLElement | null>(null);
   const [previewSelection, setPreviewSelection] = useState<{ projectId: string; size: PreviewSize } | null>(null);
   const [loadedPreview, setLoadedPreview] = useState<string | null>(null);
-  const reducedMotion = useReducedMotion();
   const previewSize = project && previewSelection?.projectId === project.id ? previewSelection.size : "desktop";
   const selectPreviewSize = (size: PreviewSize) => {
     if (project) setPreviewSelection({ projectId: project.id, size });
   };
-
-  useEffect(() => {
-    if (!project) return;
-    returnFocus.current = document.activeElement as HTMLElement;
-    document.body.style.overflow = "hidden";
-    closeButton.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { onClose(); return; }
-      if (event.key !== "Tab") return;
-      const dialog = document.querySelector<HTMLElement>("[role='dialog']");
-      const focusable = dialog?.querySelectorAll<HTMLElement>("button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])");
-      if (!focusable?.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-      returnFocus.current?.focus();
-    };
-  }, [project, onClose]);
 
   const copy = project?.copy[locale] ?? null;
   const demo = project?.demo;
@@ -103,8 +75,14 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
     if (previewKey) setLoadedPreview(previewKey);
   };
 
-  return <AnimatePresence initial={false}>{project && copy && <motion.div className="dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0.01 : 0.2, ease: "easeOut" }}>
-    <motion.div className="project-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" initial={{ opacity: 0, y: reducedMotion ? 0 : 22, scale: reducedMotion ? 1 : 0.965 }} animate={{ opacity: 1, y: 0, scale: 1, transition: reducedMotion ? { duration: 0.01 } : { type: "spring", stiffness: 320, damping: 29, mass: 0.85 } }} exit={{ opacity: 0, y: reducedMotion ? 0 : 12, scale: reducedMotion ? 1 : 0.985, transition: { duration: reducedMotion ? 0.01 : 0.16, ease: "easeIn" } }}>
+  return (
+    <Dialog open={Boolean(project && copy)} onOpenChange={(open) => { if (!open) onClose(); }}>
+      {project && copy && <DialogContent
+        className="project-dialog"
+        overlayClassName="dialog-backdrop"
+        aria-labelledby="dialog-title"
+        onOpenAutoFocus={(event) => { event.preventDefault(); closeButton.current?.focus(); }}
+      >
       <div className="demo-header">
         <div className="demo-project-heading">
           <span className={`demo-project-icon ${project.image ? "has-image" : ""}`} aria-hidden="true">
@@ -113,7 +91,7 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
               : demo?.type === "video" ? <icons.play size={18} /> : <icons.monitor size={18} />}
           </span>
           <div>
-            <h2 id="dialog-title">{copy.name}</h2>
+            <DialogTitle asChild><h2 id="dialog-title">{copy.name}</h2></DialogTitle>
             <span>{demo ? t.demoMode : t.preview}</span>
           </div>
         </div>
@@ -138,6 +116,7 @@ export function ProjectPreviewDialog({ project, t, locale, onClose }: {
           <p>{t.previewBody}</p>
         </div> : null}
       </div>
-    </motion.div>
-  </motion.div>}</AnimatePresence>;
+      </DialogContent>}
+    </Dialog>
+  );
 }

@@ -5,6 +5,7 @@ import { icons } from "@/config/icons";
 import type { Theme } from "@/types/portfolio";
 import { TechnologyIcon } from "@/components/icons/technology-icons";
 import { services } from "@/data/services";
+import { Button } from "@/components/ui/button";
 import { reveal, type BaseProps } from "./motion";
 
 export function ServicesSection({
@@ -69,10 +70,10 @@ export function ServicesSection({
         </div>
         <div className="services-cta">
           <p>{t.servicesCta}</p>
-          <button className="button button-primary" onClick={onContact}>
+          <Button type="button" variant="ghost" className="button button-primary" onClick={onContact}>
             {t.servicesCtaButton}
             <icons.arrowUpRight size={19} />
-          </button>
+          </Button>
         </div>
       </div>
     </section>

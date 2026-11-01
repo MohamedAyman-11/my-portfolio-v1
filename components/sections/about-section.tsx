@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useCountUp } from "react-countup";
 import { motion } from "framer-motion";
 import { icons } from "@/config/icons";
 import { skills, skillCategories } from "@/data/skills";
@@ -48,7 +49,7 @@ export function AboutSection({
                   <StatIcon size={23} strokeWidth={1.8} aria-hidden="true" />
                 </span>
                 <strong>
-                  <AnimatedStat value={item.value} />
+                  <AnimatedStat value={item.value} reducedMotion={reducedMotion} />
                 </strong>
                 <span>{item.label}</span>
               </div>
@@ -122,41 +123,51 @@ export function AboutSection({
   );
 }
 
-function AnimatedStat({ value }: { value: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(0);
+function AnimatedStat({
+  value,
+  reducedMotion,
+}: {
+  value: string;
+  reducedMotion: boolean;
+}) {
   const parts = value.match(/^([^0-9]*)(\d+)(.*)$/);
   const numericTarget = parts ? Number(parts[2]) : null;
 
-  useEffect(() => {
-    if (numericTarget === null || !ref.current) return;
-    let frame = 0;
-    const target = numericTarget;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        const started = performance.now();
-        const duration = 1100;
-        const tick = (now: number) => {
-          const progress = Math.min((now - started) / duration, 1);
-          setCount(Math.floor(target * (1 - (1 - progress) ** 3)));
-          if (progress < 1) frame = requestAnimationFrame(tick);
-        };
-        frame = requestAnimationFrame(tick);
-        observer.disconnect();
-      },
-      { threshold: 0.35 },
-    );
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, [numericTarget]);
+  if (numericTarget === null || !parts) return <span dir="ltr">{value}</span>;
 
   return (
-    <span ref={ref} dir="ltr">
-      {parts ? `${parts[1]}${count}${parts[3]}` : value}
-    </span>
+    <CountedStat
+      target={numericTarget}
+      prefix={parts[1]}
+      suffix={parts[3]}
+      reducedMotion={reducedMotion}
+    />
   );
+}
+
+function CountedStat({
+  target,
+  prefix,
+  suffix,
+  reducedMotion,
+}: {
+  target: number;
+  prefix: string;
+  suffix: string;
+  reducedMotion: boolean;
+}) {
+  const ref = useRef<HTMLElement>(null!);
+
+  useCountUp({
+    ref,
+    start: 0,
+    end: target,
+    duration: reducedMotion ? 0 : 2,
+    prefix,
+    suffix,
+    enableScrollSpy: !reducedMotion,
+    scrollSpyOnce: true,
+  });
+
+  return <span ref={ref} dir="ltr" />;
 }
