@@ -12,6 +12,7 @@ export const skills = [
   { id: "express", name: "Express.js", category: "backend", icon: "express" },
   { id: "prisma", name: "Prisma", category: "backend", icon: "prisma" },
   { id: "mongodb", name: "MongoDB", category: "backend", icon: "mongodb" },
+  { id: "mongoose", name: "Mongoose", category: "backend", icon: "mongoose" },
   { id: "postgresql", name: "PostgreSQL", category: "backend", icon: "postgresql" },
   { id: "git", name: "Git", category: "tools", icon: "git" },
   { id: "postman", name: "Postman", category: "tools", icon: "postman" },

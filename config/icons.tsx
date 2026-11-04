@@ -89,6 +89,7 @@ export const technologyIcons = {
   express: icons.braces,
   prisma: icons.database,
   mongodb: icons.database,
+  mongoose: icons.database,
   postgresql: icons.database,
   git: icons.gitBranch,
   postman: icons.send,

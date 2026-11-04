@@ -87,7 +87,7 @@ export default function Portfolio({
       if (frame) return;
       frame = window.requestAnimationFrame(() => {
         frame = 0;
-        setScrolled(window.scrollY > 0);
+        setScrolled(window.scrollY > 10);
         const headerBottom =
           document.querySelector(".topbar")?.getBoundingClientRect().bottom ??
           0;
@@ -151,12 +151,10 @@ export default function Portfolio({
     setMobileOpen(false);
     window.requestAnimationFrame(() =>
       window.requestAnimationFrame(() => {
-        document
-          .getElementById(id)
-          ?.scrollIntoView({
-            behavior: reducedMotion ? "auto" : "smooth",
-            block: "start",
-          });
+        document.getElementById(id)?.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
       }),
     );
   };
@@ -234,9 +232,6 @@ export default function Portfolio({
           }
         }}
       >
-        <div className="scroll-progress" aria-hidden="true">
-          <span ref={progressRef} />
-        </div>
         <div className="ambient ambient-one" aria-hidden="true" />
         <div className="ambient ambient-two" aria-hidden="true" />
         <SiteHeader
@@ -245,6 +240,7 @@ export default function Portfolio({
           theme={theme}
           activeSection={active}
           scrolled={scrolled}
+          progressRef={progressRef}
           mobileOpen={mobileOpen}
           onNavigate={scrollTo}
           onToggleTheme={toggleTheme}

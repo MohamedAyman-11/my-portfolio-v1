@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { RefObject } from "react";
 import { icons } from "@/config/icons";
 import { site } from "@/config/site";
 import { navigation } from "@/data/navigation";
@@ -15,6 +16,7 @@ type SiteHeaderProps = {
   theme: Theme;
   activeSection: string;
   scrolled: boolean;
+  progressRef: RefObject<HTMLSpanElement | null>;
   mobileOpen: boolean;
   onNavigate: (id: string) => void;
   onToggleTheme: () => void;
@@ -29,6 +31,7 @@ export function SiteHeader({
   theme,
   activeSection,
   scrolled,
+  progressRef,
   mobileOpen,
   onNavigate,
   onToggleTheme,
@@ -104,6 +107,9 @@ export function SiteHeader({
               </span>
             </button>
           </SheetTrigger>
+        </div>
+        <div className="scroll-progress" aria-hidden="true">
+          <span ref={progressRef} />
         </div>
       </nav>
 

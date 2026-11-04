@@ -15,6 +15,8 @@ export function ServicesSection({
   locale,
   onContact,
 }: BaseProps & { theme: Theme; locale: "en" | "ar"; onContact: () => void }) {
+  const Arrow = locale === "ar" ? icons.arrowUpLeft : icons.arrowUpRight;
+
   return (
     <section className="section services-section section-anchor" id="services">
       <div className="section-inner">
@@ -56,6 +58,12 @@ export function ServicesSection({
                       })()
                     )}
                   </span>
+                  <span className="service-index" dir="ltr">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="service-link-icon" aria-hidden="true">
+                    <Arrow size={17} />
+                  </span>
                 </div>
                 <h3>{copy.title}</h3>
                 <p>{copy.body}</p>
@@ -72,7 +80,7 @@ export function ServicesSection({
           <p>{t.servicesCta}</p>
           <Button type="button" variant="ghost" className="button button-primary" onClick={onContact}>
             {t.servicesCtaButton}
-            <icons.arrowUpRight size={19} />
+            <Arrow size={19} />
           </Button>
         </div>
       </div>

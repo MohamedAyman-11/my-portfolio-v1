@@ -156,40 +156,25 @@ export function ProjectsSection({
                             id={`repositories-${project.id}`}
                             className="project-repositories"
                             aria-label={t.repositoriesLabel}
-                            initial={{ height: 0, opacity: 0, y: -8 }}
-                            animate={{ height: "auto", opacity: 1, y: 0 }}
-                            exit={{ height: 0, opacity: 0, y: -8 }}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
                             transition={{
-                              height: {
-                                duration: reducedMotion ? 0 : 0.32,
-                                ease: [0.22, 1, 0.36, 1],
-                              },
-                              opacity: { duration: reducedMotion ? 0 : 0.2 },
-                              y: {
-                                duration: reducedMotion ? 0 : 0.24,
-                                ease: "easeOut",
-                              },
+                              duration: reducedMotion ? 0 : 0.22,
+                              ease: [0.22, 1, 0.36, 1],
                             }}
                             style={{ overflow: "hidden" }}
                           >
-                            {repositories.map((repository, repositoryIndex) => (
-                              <motion.a
+                            {repositories.map((repository) => (
+                              <a
                                 key={repository.url}
                                 href={repository.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  duration: reducedMotion ? 0 : 0.2,
-                                  delay: reducedMotion
-                                    ? 0
-                                    : repositoryIndex * 0.06,
-                                }}
                               >
                                 <span>{repository.name}</span>
                                 <icons.externalLink size={16} />
-                              </motion.a>
+                              </a>
                             ))}
                           </motion.div>
                         )}
