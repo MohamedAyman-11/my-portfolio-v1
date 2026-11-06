@@ -63,13 +63,6 @@ export function HeroSection({
       <div className="hero-grid">
         <motion.div
           className="portrait-column"
-          onPointerLeave={(event) => {
-            const frame =
-              event.currentTarget.querySelector<HTMLElement>(".portrait-frame");
-            frame?.style.setProperty("--tilt-x", "0deg");
-            frame?.style.setProperty("--tilt-y", "0deg");
-            frame?.style.setProperty("--tilt-z", "0deg");
-          }}
           initial={reducedMotion ? false : { opacity: 0, scale: 0.94, y: 18 }}
           animate={
             headingComplete

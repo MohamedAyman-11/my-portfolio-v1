@@ -200,24 +200,6 @@ export default function Portfolio({
         onPointerMove={(event) => {
           if (reducedMotion || event.pointerType !== "mouse") return;
           const target = event.target as HTMLElement;
-          const portrait = target.closest<HTMLElement>(".portrait-column");
-          if (portrait) {
-            const rect = portrait.getBoundingClientRect();
-            const frame =
-              portrait.querySelector<HTMLElement>(".portrait-frame");
-            const x = Math.max(
-              0,
-              Math.min(1, (event.clientX - rect.left) / rect.width),
-            );
-            const y = Math.max(
-              0,
-              Math.min(1, (event.clientY - rect.top) / rect.height),
-            );
-            frame?.style.setProperty("--tilt-x", `${(x - 0.5) * 10}deg`);
-            frame?.style.setProperty("--tilt-y", `${(0.5 - y) * 10}deg`);
-            frame?.style.setProperty("--tilt-z", `${(x - 0.5) * 3}deg`);
-            return;
-          }
           const card = target.closest<HTMLElement>(".card-surface, .stat-card");
           if (card) {
             const rect = card.getBoundingClientRect();

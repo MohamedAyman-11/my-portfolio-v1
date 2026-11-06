@@ -1,5 +1,5 @@
 import type { Locale } from "@/types/portfolio";
-import photo from "@/app/assets/mohamed-ayman.jpg";
+import photo from "@/app/assets/mohamed-ayman.jpeg";
 
 export const site = {
   name: "Mohamed Ayman",
@@ -9,5 +9,5 @@ export const site = {
   location: { en: "Egypt", ar: "مصر" } satisfies Record<Locale, string>,
   photo,
   cvUrl: "/mohamed-ayman-cv.pdf",
-  availabilityEnabled: false,
+  availabilityEnabled: true,
 } as const;
